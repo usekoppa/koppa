@@ -4,6 +4,20 @@ import { Nullable, ZeroToNine } from "../_internals/utils.ts";
 import { Channel } from "./channel.ts";
 import { Guild } from "./guild.ts";
 
+export interface User extends User.Partial {
+  bot?: boolean;
+  system?: boolean;
+  mfa_enabled?: boolean;
+  banner?: Nullable<string>;
+  accent_color?: Nullable<number>;
+  locale?: string;
+  verified?: boolean;
+  email?: Nullable<string>;
+  flags?: User.Flags | number;
+  premium_type?: User.Premium;
+  public_flags?: User.Flags | number;
+}
+
 export namespace User {
   export type Discriminator =
     `${ZeroToNine}${ZeroToNine}${ZeroToNine}${ZeroToNine}`;
@@ -39,36 +53,22 @@ export namespace User {
     avatar: Nullable<string>;
   }
 
-  export interface User extends Partial {
-    bot?: boolean;
-    system?: boolean;
-    mfa_enabled?: boolean;
-    banner?: Nullable<string>;
-    accent_color?: Nullable<number>;
-    locale?: string;
-    verified?: boolean;
-    email?: Nullable<string>;
-    flags?: Flags | number;
-    premium_type?: Premium;
-    public_flags?: Flags | number;
+  export interface Connection {
+    id: Snowflake;
+    name: string;
+    type: string;
+    revoked?: boolean;
+    integrations?: Guild.Integration[];
+    verified: boolean;
+    friend_sync: boolean;
+    show_activity: boolean;
+    visibility: Connection.Visibility;
   }
 
   export namespace Connection {
     export const enum Visibility {
       None = 0,
       Everyone = 1,
-    }
-
-    export interface Connection {
-      id: Snowflake;
-      name: string;
-      type: string;
-      revoked?: boolean;
-      integrations?: Guild.Integration[];
-      verified: boolean;
-      friend_sync: boolean;
-      show_activity: boolean;
-      visibility: Visibility;
     }
   }
 
@@ -138,7 +138,7 @@ export namespace User {
         }
 
         export namespace Response {
-          export type Data = Connection.Connection[];
+          export type Data = Connection[];
         }
       }
     }

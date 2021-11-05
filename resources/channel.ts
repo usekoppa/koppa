@@ -5,4 +5,7 @@ export namespace Channel {
     export type Channel = $TODO;
     export type GroupDM = $TODO;
   }
+
+  export type Thread = $TODO;
+  export namespace Thread {}
 }
