@@ -1,27 +1,27 @@
 export namespace OAuth2 {
+  export type Scopes =
+  | Scopes.Activities.Read
+  | Scopes.Activities.Write
+  | Scopes.Applications.Builds.Read
+  | Scopes.Applications.Builds.Write
+  | Scopes.Applications.Commands.Commands
+  | Scopes.Applications.Commands.Update
+  | Scopes.Bot
+  | Scopes.Connections
+  | Scopes.Email
+  | Scopes.GroupDM.Join
+  | Scopes.Guilds.Guilds
+  | Scopes.Guilds.Join
+  | Scopes.Identify
+  | Scopes.Messages.Read
+  | Scopes.Relationships.Read
+  | Scopes.RPC.RPC
+  | Scopes.RPC.Activities.Write
+  | Scopes.RPC.Notifications.Read
+  | Scopes.RPC.Voice.Read
+  | Scopes.RPC.Voice.Write;
+  
   export namespace Scopes {
-    export type Scopes =
-      | Activities.Read
-      | Activities.Write
-      | Applications.Builds.Read
-      | Applications.Builds.Write
-      | Applications.Commands.Commands
-      | Applications.Commands.Update
-      | Bot
-      | Connections
-      | Email
-      | GroupDM.Join
-      | Guilds.Guilds
-      | Guilds.Join
-      | Identify
-      | Messages.Read
-      | Relationships.Read
-      | RPC.RPC
-      | RPC.Activities.Write
-      | RPC.Notifications.Read
-      | RPC.Voice.Read
-      | RPC.Voice.Write;
-
     export namespace Activities {
       export type Read = "activities.read";
       export const Read: Read = "activities.read";
