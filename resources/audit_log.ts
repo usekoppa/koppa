@@ -182,9 +182,22 @@ export namespace AuditLog {
         }
       }
 
+      /**
+       * A role has been modified/created/deleted.
+       */
       export namespace Role {
+        /**
+         * The ID of the role changed.
+         */
+        export type ID = Snowflake;
+        export const ID = "id";
+
+        /**
+         * Name changed.
+         */
         export type Name = string;
         export const Name = "name";
+
         /**
          * New role added.
          */
@@ -198,16 +211,16 @@ export namespace AuditLog {
         export const Remove = "$remove";
 
         /**
-         * A permission on a text or voice channel was allowed for a role
+         * A permission on a text or voice channel was allowed for a role.
          */
-        export type AllowPermission = string;
-        export const AllowPermission = "allow";
+        export type AllowChannelPermission = string;
+        export const AllowChannelPermission = "allow";
 
         /**
-         * A permission on a text or voice channel was denied for a role
+         * A permission on a text or voice channel was denied for a role.
          */
-        export type DenyPermission = string;
-        export const DenyPermission = "deny";
+        export type DenyChannelPermission = string;
+        export const DenyChannelPermission = "deny";
 
         /**
          * The color of the role changed.
@@ -220,6 +233,30 @@ export namespace AuditLog {
          */
         export type Colour = Color;
         export const Colour = Color;
+
+        /**
+         * Role is now mentionable/unmentionable.
+         */
+        export type Mentionable = boolean;
+        export const Mentionable = "mentionable";
+
+        /**
+         * Role is now displayed/no longer displayed separate from online users.
+         */
+        export type Hoist = boolean;
+        export const Hoist = "hoist";
+
+        /**
+         * The icon for the role changed.
+         */
+        export type IconHash = string;
+        export const IconHash = "icon_hash";
+
+        /**
+         * The permissions for the role changed.
+         */
+        export type Permissions = string;
+        export const Permissions = "permissions";
 
         /**
          * Role unicode emoji changed.
