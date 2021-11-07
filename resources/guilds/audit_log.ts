@@ -2,6 +2,7 @@ import { Snowflake } from "../../types/snowflake.ts";
 import { $TODO, Nullable } from "../../_internals/utils.ts";
 import { Channel } from "../channel.ts";
 import { Guild as GuildNS } from "./guild.ts";
+import { Sticker as StickerNS } from "./sticker.ts";
 import { User } from "../user.ts";
 import { Webhook } from "../webhook.ts";
 
@@ -174,16 +175,23 @@ export namespace AuditLog {
         }
 
         /**
-         * The guild banner has changed.
+         * The ID changed for a guild.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
+         * The guild banner was changed.
          */
         export type Banner = string;
         export const Banner = "banner_hash";
 
         /**
-         * Default message notification level has changed.
+         * Default message notification level was changed.
          */
         export type DefaultMessageNotificationsLevel =
           GuildNS.DefaultMessageNotificationLevel;
+
         export const DefaultMessageNotificationsLevel =
           "default_message_notifications";
 
@@ -198,9 +206,21 @@ export namespace AuditLog {
          */
         export type ExplicitContentFilter = GuildNS.ExplicitContentFilterLevel;
         export const ExplicitContentFilter = "explicit_content_filter";
+
+        /**
+         * Icon was changed for a guild.
+         */
+        export type Icon = string;
+        export const Icon = "icon_hash";
       }
 
       export namespace Integration {
+        /**
+         * The ID changed for a integration.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
         /**
          * Emoticons for an integration were enabled or disabled.
          */
@@ -208,13 +228,13 @@ export namespace AuditLog {
         export const Emoticons = "enable_emoticons";
 
         /**
-         * Integration subscription expiry behaviour has changed.
+         * Integration subscription expiry behaviour was changed.
          */
         export type ExpireBehavior = number;
         export const ExpireBehavior = "expire_behavior";
 
         /**
-         * Integration subscription expiry behaviour has changed.
+         * Integration subscription expiry behaviour was changed.
          */
         export type ExpireBehaviour = ExpireBehavior;
         export const ExpireBehaviour = ExpireBehavior;
@@ -228,13 +248,19 @@ export namespace AuditLog {
 
       export namespace Channel {
         /**
+         * The ID changed for a channel.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
          * A bot or webhook was added to the channel.
          */
         export type Application = Snowflake.Raw;
         export const Application = "application_id";
 
         /**
-         * Voice channel bitrate has changed.
+         * Voice channel bitrate was changed.
          */
         export type Bitrate = number;
         export const Bitrate = "bitrate";
@@ -255,13 +281,19 @@ export namespace AuditLog {
 
       export namespace Thread {
         /**
+         * The ID changed for a thread.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
          * Thread was archived or unarchived.
          */
         export type Archived = boolean;
         export const Archived = "archived";
 
         /**
-         * Auto archive duration has changed.
+         * Auto archive duration was changed.
          */
         export type AutoArchiveDuration = number;
         export const AutoArchiveDuration = "auto_archive_duration";
@@ -269,13 +301,19 @@ export namespace AuditLog {
 
       export namespace Invite {
         /**
-         * The channel an invite was made for has changed.
+         * The ID changed for a invite.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
+         * The channel an invite was made for was changed.
          */
         export type Channel = Snowflake.Raw;
         export const Channel = "channel_id";
 
         /**
-         * Invite code has changed.
+         * Invite code was changed.
          */
         export type Code = string;
         export const Code = "code";
@@ -283,13 +321,19 @@ export namespace AuditLog {
 
       export namespace Sticker {
         /**
+         * The ID changed for a sticker.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
          * __An unknown and poorly documented audit log change key.__
          */
         export type Asset = "";
         export const Asset = "asset";
 
         /**
-         * Availability of a sticker has changed.
+         * Availability of a sticker was changed.
          */
         export type Available = boolean;
         export const Available = "available";
@@ -299,11 +343,29 @@ export namespace AuditLog {
          */
         export type Description = string;
         export const Description = "description";
+
+        /**
+         * Format type of sticker changed.
+         */
+        export type Format = StickerNS.Format;
+        export const Format = "format_type";
+
+        /**
+         * The guild the sticker is in was changed.
+         */
+        export type Guild = Snowflake.Raw;
+        export const Guild = "guild_id";
       }
 
       export namespace User {
         /**
-         * User avatar changed.
+         * The ID changed for a user.
+         */
+        export type ID = Snowflake.Raw;
+        export const ID = "id";
+
+        /**
+         * The avatar of a user has changed.
          */
         export type Avatar = string;
         export const Avatar = "avatar_hash";
@@ -316,29 +378,29 @@ export namespace AuditLog {
       }
 
       /**
-       * A role has been modified/created/deleted.
+       * A role was been modified/created/deleted.
        */
       export namespace Role {
         /**
-         * The ID of the role changed.
+         * The ID changed for a role.
          */
         export type ID = Snowflake.Raw;
         export const ID = "id";
 
         /**
-         * Name changed.
+         * The name was changed for a role.
          */
         export type Name = string;
         export const Name = "name";
 
         /**
-         * New role added.
+         * A role was added to a server.
          */
         export type Add = GuildNS.Role.Partial;
         export const Add = "$add";
 
         /**
-         * Role removed.
+         * A role was removed from a server.
          */
         export type Remove = GuildNS.Role.Partial;
         export const Remove = "$remove";
@@ -356,43 +418,43 @@ export namespace AuditLog {
         export const DenyChannelPermission = "deny";
 
         /**
-         * The colour of the role changed.
+         * The colour was changed for a role.
          */
         export type Color = number;
         export const Color = "color";
 
         /**
-         * The colour of the role changed.
+         * The colour was changed for a role.
          */
         export type Colour = Color;
         export const Colour = Color;
 
         /**
-         * Role is now mentionable/unmentionable.
+         * The role was set as either mentionable or unmentionable.
          */
         export type Mentionable = boolean;
         export const Mentionable = "mentionable";
 
         /**
-         * Role is now displayed/no longer displayed separate from online users.
+         * The role was set to display or no longer display separately from online users.
          */
         export type Hoist = boolean;
         export const Hoist = "hoist";
 
         /**
-         * The icon for the role changed.
+         * The icon changed for a role.
          */
         export type Icon = string;
         export const Icon = "icon_hash";
 
         /**
-         * The permissions for the role changed.
+         * The permissions changed for a role.
          */
         export type Permissions = string;
         export const Permissions = "permissions";
 
         /**
-         * Role unicode emoji changed.
+         * The unicode emoji was changed for a role.
          */
         export type UnicodeEmoji = string;
         export const UnicodeEmoji = "unicode_emoji";
