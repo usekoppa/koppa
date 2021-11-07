@@ -1,3 +1,6 @@
+/**
+ * The Discord Epoch; the first second of 2015.
+ */
 export const DISCORD_EPOCH = 1420070400000n;
 
 /**
@@ -48,8 +51,17 @@ export class Snowflake {
     Reflect.set(this, "timestamp", timestamp);
   }
 
+  /**
+   * Matches a string as a Snowflake.
+   */
   static Matcher = /[0-9]{17,19}/;
 
+  /**
+   * Validates whether or not a value is a {@link Snowflake.Raw | Raw Snowflake} representation.
+   *
+   * @param value - The value to be verified.
+   * @returns Whether or not the value is a {{@link Snowflake.Raw | Raw Snowflake} representation.
+   */
   static isValid(value: unknown) {
     if (typeof value === "string") {
       return !!value.match(Snowflake.Matcher);
