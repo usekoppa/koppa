@@ -6,15 +6,44 @@ import { Sticker as StickerNS } from "./sticker.ts";
 import { User } from "../user.ts";
 import { Webhook } from "../webhook.ts";
 
+/**
+ * An audit log object associated with a guild.
+ * 
+ * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure | Audit Log Structure}
+ */
 export interface AuditLog {
+  /**
+   * A list of audit log entries.
+   */
   audit_log_entries: AuditLog.Entry[];
+
+  /**
+   * The integrations for this guild.
+   */
   integrations: GuildNS.Integration[];
   threads: Channel.Thread[];
   users: User[];
   webhooks: Webhook;
 }
 
+/**
+ * Whenever an admin action is performed on the API, an entry is added to the respective guild's audit log.
+ *
+ * @remarks
+ * You can specify the reason by attaching the X-Audit-Log-Reason request header.
+ * This header supports url encoded UTF-8 characters.
+ *
+ * @see {@link https://discord.com/developers/docs/resources/audit-log | Audit Logs Resource}
+ */
 export namespace AuditLog {
+  /**
+   * An audit log event.
+   *
+   * @remarks
+   * Audit log entries are associated with a certain type of event.
+   *
+   * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events | Audit Log Events}
+   */
   export const enum Event {
     GuildUpdate = 1,
     ChannelCreate = 10,
@@ -212,6 +241,8 @@ export namespace AuditLog {
          */
         export type Icon = string;
         export const Icon = "icon_hash";
+
+        export type MFALevel = GuildNS;
       }
 
       export namespace Integration {
@@ -297,6 +328,12 @@ export namespace AuditLog {
          */
         export type AutoArchiveDuration = number;
         export const AutoArchiveDuration = "auto_archive_duration";
+
+        /**
+         * A thread was unlocked or locked.
+         */
+        export type Lock = boolean;
+        export const Lock = "locked";
       }
 
       export namespace Invite {
@@ -317,6 +354,24 @@ export namespace AuditLog {
          */
         export type Code = string;
         export const Code = "code";
+
+        /**
+         * The inviter changed for an invite.
+         */
+        export type Inviter = Snowflake.Raw;
+        export const Inviter = "inviter_id";
+
+        /**
+         * The maximum age was changed for an invite.
+         */
+        export type MaxAge = number;
+        export const MaxAge = "max_age";
+
+        /**
+         * The maximum number of uses was changed for an invite.
+         */
+        export type MaxUses = number;
+        export const MaxUses = "max_uses";
       }
 
       export namespace Sticker {
@@ -365,7 +420,7 @@ export namespace AuditLog {
         export const ID = "id";
 
         /**
-         * The avatar of a user has changed.
+         * The avatar of a user was changed.
          */
         export type Avatar = string;
         export const Avatar = "avatar_hash";

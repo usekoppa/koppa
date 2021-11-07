@@ -4,6 +4,15 @@ import { Nullable, ZeroToNine } from "../_internals/utils.ts";
 import { Channel } from "./channel.ts";
 import { Guild } from "./guilds/guild.ts";
 
+/**
+ * Users in Discord are generally considered the base entity.
+ * Users can spawn across the entire platform, be members of guilds, participate in text and voice chat, and much more.
+ * Users are separated by a distinction of "bot" vs "normal."
+ * Although they are similar, bot users are automated users that are "owned" by another user.
+ * Unlike normal users, bot users do not have a limitation on the number of Guilds they can be a part of.
+ *
+ * @see {@link https://discord.com/developers/docs/resources/user#user-object-user-structure | User Structure}
+ */
 export interface User extends User.Partial {
   bot?: boolean;
   system?: boolean;
@@ -93,7 +102,8 @@ export namespace User {
       }
 
       export namespace User {
-        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> = `/users/${ID}`;
+        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> =
+          `/users/${ID}`;
         export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
           ID: ID,
         ): Route<ID> {
