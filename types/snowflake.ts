@@ -1,9 +1,25 @@
 export const DISCORD_EPOCH = 1420070400000n;
 
+/**
+ * A globally unique ID within Discord.
+ *
+ * @see {@link https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right | Snowflake ID Format Structure}
+ */
 export class Snowflake {
+  /**
+   * The timestamp at which the Snowflake was generated.
+   *
+   * @remarks
+   * This typically correlates to the creation timestamp of an Entity.   *
+   */
   readonly timestamp!: Date;
   readonly workerID!: number;
   readonly processID!: number;
+
+  /**
+   * For every Snowflake ID that is generated on the process that generated this Snowflake ID,
+   * this number is incremented.
+   */
   readonly increment!: number;
 
   constructor(readonly raw: Snowflake.Raw) {
@@ -43,12 +59,12 @@ export class Snowflake {
   }
 
   /**
-   * Creates a rudimentary Snowflake from a timestamp.
+   * Creates a rudimentary Snowflake ID from a timestamp.
    *
    * @see {@link https://discord.com/developers/docs/reference#snowflake-ids-in-pagination-generating-a-snowflake-id-from-a-timestamp-example | Generating a snowflake ID from a Timestamp Example}
    *
    * @param timestamp - The timestamp to use in the first 42 bits of the snowflake.
-   * @returns A snowflake
+   * @returns A rudimentary Snowflake ID.
    */
   static createFromTimestamp(timestamp: Date | number) {
     const timestampUnixEpoch = BigInt(timestamp?.valueOf() ?? timestamp);
@@ -57,6 +73,22 @@ export class Snowflake {
   }
 }
 
+/**
+ * Discord utilizes Twitter's Snowflake format for uniquely identifiable descriptors (IDs).
+ *
+ * @remarks
+ * These IDs are guaranteed to be unique across all of Discord,
+ * except in some unique scenarios in which child objects share their parent's ID.
+ *
+ * @see {@link https://discord.com/developers/docs/reference#snowflakes | Snowflakes}
+ */
 export namespace Snowflake {
+  /**
+   * A Snowflake ID in its raw string representation.
+   *
+   * @remarks
+   * Since Snowflake are up to 64 bits in size (e.g. a uint64),
+   * they are always returned as strings in the HTTP API to prevent integer overflows in some language.
+   */
   export type Raw = `${bigint}`;
 }
