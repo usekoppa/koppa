@@ -1,8 +1,8 @@
-import { OAuth2 as OAuth2NS } from "../oauth2.ts";
-import { Snowflake } from "../snowflake.ts";
+import { OAuth2 as OAuth2NS } from "./oauth2.ts";
+import { Snowflake } from "../types/snowflake.ts";
 import { Nullable, ZeroToNine } from "../_internals/utils.ts";
 import { Channel } from "./channel.ts";
-import { Guild } from "./guild.ts";
+import { Guild } from "./guilds/guild.ts";
 
 export interface User extends User.Partial {
   bot?: boolean;
@@ -47,14 +47,14 @@ export namespace User {
   }
 
   export interface Partial {
-    id: Snowflake;
+    id: Snowflake.Raw;
     username: string;
     discriminator: Discriminator;
     avatar: Nullable<string>;
   }
 
   export interface Connection {
-    id: Snowflake;
+    id: Snowflake.Raw;
     name: string;
     type: string;
     revoked?: boolean;
@@ -93,8 +93,8 @@ export namespace User {
       }
 
       export namespace User {
-        export type Route<ID extends Snowflake = Snowflake> = `/users/${ID}`;
-        export function Route<ID extends Snowflake = Snowflake>(
+        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> = `/users/${ID}`;
+        export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
           ID: ID,
         ): Route<ID> {
           return `/users/${ID}`;
@@ -110,8 +110,8 @@ export namespace User {
         export const Route: Route = "/users/@me/guilds";
 
         export interface Query {
-          before: Snowflake;
-          after: Snowflake;
+          before: Snowflake.Raw;
+          after: Snowflake.Raw;
           limit: number;
         }
 
@@ -177,7 +177,7 @@ export namespace User {
           /**
            * The recipient to open a DM channel with.
            */
-          recipient_id: Snowflake;
+          recipient_id: Snowflake.Raw;
         }
 
         export namespace Response {
@@ -204,7 +204,7 @@ export namespace User {
            * A dictionary of user IDs to their respective nicknames.
            */
           nicks: {
-            [userID: Snowflake]: string;
+            [userID: Snowflake.Raw]: string;
           };
         }
 
@@ -216,10 +216,10 @@ export namespace User {
 
     export namespace DELETE {
       export namespace LeaveGuild {
-        export type Route<ID extends Snowflake = Snowflake> =
+        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> =
           `/users/@me/guilds/${ID}`;
 
-        export function Route<ID extends Snowflake = Snowflake>(
+        export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
           ID: ID,
         ): Route<ID> {
           return `/users/@me/guilds/${ID}`;

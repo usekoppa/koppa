@@ -1,10 +1,10 @@
-import { Snowflake } from "../snowflake.ts";
+import { Snowflake } from "../types/snowflake.ts";
 import { Nullable } from "../_internals/utils.ts";
-import { Team } from "../models/team.ts";
+import { Team } from "../types/team.ts";
 import { User } from "./user.ts";
 
 export interface Application {
-  id: Snowflake;
+  id: Snowflake.Raw;
   name: string;
   icon: Nullable<string>;
   description: string;
@@ -17,8 +17,8 @@ export interface Application {
   summary: string;
   verify_key: string;
   team?: Nullable<Team.Team>;
-  guild_id?: Snowflake;
-  primary_sku_id?: Snowflake;
+  guild_id?: Snowflake.Raw;
+  primary_sku_id?: Snowflake.Raw;
   slug?: string;
   cover_image?: string;
   flags?: Application.Flags | number;

@@ -1,4 +1,4 @@
-import { Snowflake } from "../snowflake.ts";
+import { Snowflake } from "./snowflake.ts";
 import { Nullable } from "../_internals/utils.ts";
 import { User } from "../resources/user.ts";
 

@@ -1,4 +1,6 @@
 export namespace OAuth2 {
+  export type Route = "/oauth2";
+  
   export type Scopes =
   | Scopes.Activities.Read
   | Scopes.Activities.Write
