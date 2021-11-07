@@ -38,6 +38,9 @@ export class Snowflake {
     // Resolve the snowflake into its data types.
     // https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
 
+    const timestamp = new Date(Number((snowflake >> 22n) + DISCORD_EPOCH));
+    Reflect.set(this, "timestamp", timestamp);
+
     const workerID = Number((snowflake & 0x3E0000n) >> 17n);
     Reflect.set(this, "workerID", workerID);
 
@@ -46,9 +49,6 @@ export class Snowflake {
 
     const increment = Number(snowflake & 0xFFFn);
     Reflect.set(this, "increment", increment);
-
-    const timestamp = new Date(Number((snowflake >> 22n) + DISCORD_EPOCH));
-    Reflect.set(this, "timestamp", timestamp);
   }
 
   /**
