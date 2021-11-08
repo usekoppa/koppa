@@ -36,6 +36,14 @@ export namespace Guild {
     Discoverable = "DISCOVERABLE",
   }
 
+  export const enum VerificationLevel {
+    None = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+    VeryHigh = 4,
+  }
+
   /**
    * Determines the default setting for the amount of notifications a user
    * will receive on the basis of specific properties of messages.

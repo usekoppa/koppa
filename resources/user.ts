@@ -105,9 +105,9 @@ export namespace User {
         export type Route<ID extends Snowflake.Raw = Snowflake.Raw> =
           `/users/${ID}`;
         export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
-          ID: ID,
+          userID: ID,
         ): Route<ID> {
-          return `/users/${ID}`;
+          return `/users/${userID}`;
         }
 
         export namespace Response {
@@ -119,7 +119,7 @@ export namespace User {
         export type Route = "/users/@me/guilds";
         export const Route: Route = "/users/@me/guilds";
 
-        export interface Query {
+        export interface QueryString {
           before: Snowflake.Raw;
           after: Snowflake.Raw;
           limit: number;
@@ -230,9 +230,9 @@ export namespace User {
           `/users/@me/guilds/${ID}`;
 
         export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
-          ID: ID,
+          userID: ID,
         ): Route<ID> {
-          return `/users/@me/guilds/${ID}`;
+          return `/users/@me/guilds/${userID}`;
         }
 
         export namespace Response {

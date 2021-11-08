@@ -1,7 +1,7 @@
 import { Snowflake } from "../types/snowflake.ts";
 import { Nullable } from "../_internals/utils.ts";
 import { Team } from "../types/team.ts";
-import { User } from "./user.ts";
+import { User } from "../resources/user.ts";
 
 export interface Application {
   /**

@@ -244,11 +244,20 @@ export namespace AuditLog {
     /**
      * The name of audit log change key.
      */
-    key: string;
+    key: Change.Key;
   }
 
   export namespace Change {
-    export type Key = $TODO;
+    export type Key =
+      | Key.ID
+      | Key.Channel
+      | Key.Guild
+      | Key.Integration
+      | Key.Invite
+      | Key.Role
+      | Key.Sticker
+      | Key.Thread
+      | Key.User;
 
     export namespace Key {
       /**
@@ -256,6 +265,29 @@ export namespace AuditLog {
        */
       export type ID = Snowflake.Raw;
       export const ID = "id";
+
+      export type Guild =
+        | Key.Guild.AFK.Channel
+        | Key.Guild.AFK.Timeout
+        | Key.Guild.Banner
+        | Key.Guild.DefaultMessageNotificationsLevel
+        | Key.Guild.DiscoverySplash
+        | Key.Guild.ExplicitContentFilter
+        | Key.Guild.Icon
+        | Key.Guild.MFALevel
+        | Key.Guild.Name
+        | Key.Guild.Owner
+        | Key.Guild.PreferredLocale
+        | Key.Guild.PruneKickPeriod
+        | Key.Guild.PublicUpdatesChannel
+        | Key.Guild.Region
+        | Key.Guild.RulesChannel
+        | Key.Guild.Splash
+        | Key.Guild.SystemChannel
+        | Key.Guild.VanityURLCode
+        | Key.Guild.VerificationLevel
+        | Key.Guild.Widget
+        | Key.Guild.WidgetChannel;
 
       export namespace Guild {
         /**
@@ -322,7 +354,46 @@ export namespace AuditLog {
          */
         export type Owner = Snowflake.Raw;
         export const Owner = "owner_id";
+
+        export type SystemChannel = Snowflake.Raw;
+        export const SystemChannel = "system_channel_id";
+
+        export type PreferredLocale = string;
+        export const PreferredLocale = "preferred_locale";
+
+        export type PruneKickPeriod = number;
+        export const PruneKickPeriod = "prune_delete_days";
+
+        export type PublicUpdatesChannel = Snowflake.Raw;
+        export const PublicUpdatesChannel = "public_updates_channel_id";
+
+        export type Region = string;
+        export const Region = "region";
+
+        export type RulesChannel = Snowflake.Raw;
+        export const RulesChannel = "rules_channel_id";
+
+        export type Splash = string;
+        export const Splash = "splash_hash";
+
+        export type VanityURLCode = string;
+        export const VanityURLCode = "vanity_url_code";
+
+        export type VerificationLevel = GuildNS.VerificationLevel;
+        export const VerificationLevel = "verification_level";
+
+        export type WidgetChannel = Snowflake.Raw;
+        export const WidgetChannel = "widget_channel_id";
+
+        export type Widget = boolean;
+        export const Widget = "widget_enabled";
       }
+
+      export type Integration =
+        | Integration.Emoticons
+        | Integration.ExpireBehaviour
+        | Integration.ExpiryGracePeriod
+        | Integration.Name;
 
       export namespace Integration {
         /**
@@ -341,7 +412,7 @@ export namespace AuditLog {
          * Integration subscription expiry behaviour was changed.
          */
         export type ExpireBehaviour = GuildNS.Integration.ExpireBehaviour;
-        export const ExpireBehavior = "expire_behavior";
+        export const ExpireBehaviour = "expire_behavior";
 
         /**
          * An integration's grace period length was changed for subscription expiries.
@@ -349,6 +420,19 @@ export namespace AuditLog {
         export type ExpiryGracePeriod = number;
         export const ExpiryGracePeriod = "expire_grace_period";
       }
+
+      export type Channel =
+        | Channel.Application
+        | Channel.Bitrate
+        | Channel.Cooldown
+        | Channel.DefaultThreadAutoArchiveDuration
+        | Channel.Description
+        | Channel.NSFW
+        | Channel.Name
+        | Channel.Permissions
+        | Channel.Position
+        | Channel.Topic
+        | Channel.UserLimit;
 
       export namespace Channel {
         /**
@@ -423,6 +507,12 @@ export namespace AuditLog {
         export const UserLimit = "user_limit";
       }
 
+      export type Thread =
+        | Thread.Archived
+        | Thread.AutoArchiveDuration
+        | Thread.Lock
+        | Thread.Name;
+
       export namespace Thread {
         /**
          * The name of a thread was changed.
@@ -448,6 +538,15 @@ export namespace AuditLog {
         export type Lock = boolean;
         export const Lock = "locked";
       }
+
+      export type Invite =
+        | Invite.Channel
+        | Invite.Code
+        | Invite.Inviter
+        | Invite.MaxAge
+        | Invite.MaxUses
+        | Invite.Temporary
+        | Invite.Uses;
 
       export namespace Invite {
         /**
@@ -479,7 +578,22 @@ export namespace AuditLog {
          */
         export type MaxUses = number;
         export const MaxUses = "max_uses";
+
+        export type Uses = number;
+        export const Uses = "uses";
+
+        export type Temporary = boolean;
+        export const Temporary = "temporary";
       }
+
+      export type Sticker =
+        | Sticker.Asset
+        | Sticker.Available
+        | Sticker.Description
+        | Sticker.Format
+        | Sticker.Guild
+        | Sticker.Name
+        | Sticker.RelatedEmoji;
 
       export namespace Sticker {
         /**
@@ -517,7 +631,12 @@ export namespace AuditLog {
          */
         export type Guild = Snowflake.Raw;
         export const Guild = "guild_id";
+
+        export type RelatedEmoji = string;
+        export const RelatedEmoji = "tags";
       }
+
+      export type User = User.Avatar | User.Deaf | User.Mute | User.Nickname;
 
       export namespace User {
         /**
@@ -551,6 +670,19 @@ export namespace AuditLog {
       /**
        * A role was been modified/created/deleted.
        */
+      export type Role =
+        | Role.Add
+        | Role.AllowChannelPermission
+        | Role.Colour
+        | Role.DenyChannelPermission
+        | Role.Hoist
+        | Role.Icon
+        | Role.Mentionable
+        | Role.Name
+        | Role.Permissions
+        | Role.Remove
+        | Role.UnicodeEmoji;
+
       export namespace Role {
         /**
          * The name of a role was changed.
@@ -621,6 +753,32 @@ export namespace AuditLog {
     }
   }
 
+  export namespace REST {
+    export namespace GET {
+      export namespace GuildAuditLog {
+        export type Route<ID extends Snowflake.Raw> =
+          `/guilds/${ID}/audit-logs`;
+
+        export function Route<ID extends Snowflake.Raw>(
+          guildID: ID,
+        ): Route<ID> {
+          return `/guilds/${guildID}/audit-logs`;
+        }
+
+        export interface QueryString {
+          user_id: Snowflake.Raw;
+          action_type: Event;
+          before: Snowflake.Raw;
+          limit: number;
+        }
+
+        export namespace Response {
+          export type Data = AuditLog;
+        }
+      }
+    }
+  }
+
   interface _Entry<Type extends Event = Event> {
     /**
      * The ID of the affected entity (webhook, user, role, etc.)
@@ -667,8 +825,14 @@ export namespace AuditLog {
   // @ts-ignore Empty for now due to the TODO.
   // deno-lint-ignore no-empty-interface
   interface _ChangeKeyMapper {
+    [Change.Key.ID]: Change.Key.ID;
+    [Change.Key.Channel.Application]: Change.Key.Channel.Application;
+    [Change.Key.Channel.Bitrate]: Change.Key.Channel.Bitrate;
+    [Change.Key.Guild.Name]: Change.Key.Guild.Name;
     // TODO(@zorbyte): Do this huge job that will be a pain in my ass.
   }
+
+  declare const a: _ChangeKeyMapper[typeof Change.Key.Guild.Name];
 
   interface _OptionsMapper {
     [Event.ChannelOverwriteCreate]: Options.ChannelOverwrite;
