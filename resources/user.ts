@@ -22,7 +22,6 @@ export interface User extends User.Partial {
   locale?: string;
   verified?: boolean;
   email?: Nullable<string>;
-  flags?: User.Flags | number;
   premium_type?: User.Premium;
   public_flags?: User.Flags | number;
 }
@@ -60,6 +59,7 @@ export namespace User {
     username: string;
     discriminator: Discriminator;
     avatar: Nullable<string>;
+    flags?: User.Flags | number;
   }
 
   export interface Connection {

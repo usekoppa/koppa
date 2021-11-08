@@ -1,39 +1,54 @@
 export namespace OAuth2 {
   export type Route = "/oauth2";
-  
+
   export type Scopes =
-  | Scopes.Activities.Read
-  | Scopes.Activities.Write
-  | Scopes.Applications.Builds.Read
-  | Scopes.Applications.Builds.Write
-  | Scopes.Applications.Commands.Commands
-  | Scopes.Applications.Commands.Update
-  | Scopes.Bot
-  | Scopes.Connections
-  | Scopes.Email
-  | Scopes.GroupDM.Join
-  | Scopes.Guilds.Guilds
-  | Scopes.Guilds.Join
-  | Scopes.Identify
-  | Scopes.Messages.Read
-  | Scopes.Relationships.Read
-  | Scopes.RPC.RPC
-  | Scopes.RPC.Activities.Write
-  | Scopes.RPC.Notifications.Read
-  | Scopes.RPC.Voice.Read
-  | Scopes.RPC.Voice.Write;
-  
+    | Scopes.Activities.Read
+    | Scopes.Activities.Write
+    | Scopes.Applications.Builds.Read
+    | Scopes.Applications.Builds.Write
+    | Scopes.Applications.Commands.Commands
+    | Scopes.Applications.Commands.Update
+    | Scopes.Bot
+    | Scopes.Connections
+    | Scopes.Email
+    | Scopes.GroupDM.Join
+    | Scopes.Guilds.Guilds
+    | Scopes.Guilds.Join
+    | Scopes.Identify
+    | Scopes.Messages.Read
+    | Scopes.Relationships.Read
+    | Scopes.RPC.RPC
+    | Scopes.RPC.Activities.Write
+    | Scopes.RPC.Notifications.Read
+    | Scopes.RPC.Voice.Read
+    | Scopes.RPC.Voice.Write;
+
   export namespace Scopes {
     export namespace Activities {
+      /**
+       * Allows your app to fetch data from a user's "Now Playing/Recently Played" list.
+       *
+       * @remarks
+       * Requires Discord approval.
+       */
       export type Read = "activities.read";
       export const Read: Read = "activities.read";
 
+      /**
+       * Allows your app to update a user's activity.
+       *
+       * @remarks
+       * Requires Discord approval, unless using the GameSDK Activity Manager.
+       */
       export type Write = "activities.write";
       export const Write: Write = "activities.write";
     }
 
     export namespace Applications {
       export namespace Builds {
+        /**
+         * Allows your app to read build data for a user's applications
+         */
         export type Read = "applications.builds.read";
         export const Read: Read = "applications.builds.read";
 

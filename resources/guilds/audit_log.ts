@@ -1,6 +1,6 @@
 import { Snowflake } from "../../types/snowflake.ts";
 import { $TODO, Nullable } from "../../_internals/utils.ts";
-import { Channel } from "../channel.ts";
+import { Channel as ChannelNS } from "../channel.ts";
 import { Guild as GuildNS } from "./guild.ts";
 import { Sticker as StickerNS } from "./sticker.ts";
 import { User } from "../user.ts";
@@ -8,21 +8,37 @@ import { Webhook } from "../webhook.ts";
 
 /**
  * An audit log object associated with a guild.
- * 
+ *
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure | Audit Log Structure}
  */
 export interface AuditLog {
   /**
-   * A list of audit log entries.
+   * The entries of a guild's Audit Log.
    */
   audit_log_entries: AuditLog.Entry[];
 
   /**
-   * The integrations for this guild.
+   * The integrations found in a guild's Audit Log.
    */
-  integrations: GuildNS.Integration[];
-  threads: Channel.Thread[];
+  integrations: Omit<GuildNS.Integration.Partial, "enabled">[];
+
+  /**
+   * The threads found in a guild's Audit Log.
+   *
+   * @remarks
+   * Threads referenced in {@link AuditLog.Event.ThreadCreate | "THREAD_CREATE"} and {@link AuditLog.Event.ThreadUpdate | "THREAD_UPDATE"}
+   * events are included in the threads map, since archived threads might not be kept in memory by clients.
+   */
+  threads: ChannelNS.Thread[];
+
+  /**
+   * The users found in a guild's Audit Log.
+   */
   users: User[];
+
+  /**
+   * The webhooks found in a guild's Audit Log.
+   */
   webhooks: Webhook;
 }
 
@@ -106,8 +122,19 @@ export namespace AuditLog {
    * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info | Optional Audit Entry Info}
    */
   export interface Options {
+    /**
+     * Channel in which the entities were targeted.
+     */
     channel_id: Snowflake.Raw;
+
+    /**
+     * The number of entities that were targeted.
+     */
     count: string;
+
+    /**
+     * The number of days after which inactive members were kicked.
+     */
     delete_member_days: string;
 
     /**
@@ -124,7 +151,21 @@ export namespace AuditLog {
      * ID of the message that was pinned/unpinned.
      */
     message_id: Snowflake.Raw;
+
+    /**
+     * Name of the role a channel overwrite was modified for.
+     *
+     * @remarks
+     * This is not present if the entity is a member.
+     */
     role_name?: string;
+
+    /**
+     * The type of overwritten entity.
+     *
+     * @remarks
+     * "0" for "role" or "1" for "member"
+     */
     type?: Options.ChannelOverwrite.OverwrittenEntityType;
   }
 
@@ -180,15 +221,49 @@ export namespace AuditLog {
     export type StageInstanceAction = Required<Pick<Options, "channel_id">>;
   }
 
+  /**
+   * The changes that occurred in the entry.
+   *
+   * @remarks
+   * If new_value is not present in the change object,
+   * while old_value is, that means the property that was changed has been reset, or set to null.
+   *
+   * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure | Audit Log Change Structure}
+   */
   export interface Change {
+    /**
+     * The new value of the key.
+     */
     new_value?: $TODO;
+
+    /**
+     * The old value of the key
+     */
     old_value?: $TODO;
+
+    /**
+     * The name of audit log change key.
+     */
     key: string;
   }
 
   export namespace Change {
+    export type Key = $TODO;
+
     export namespace Key {
+      /**
+       * The ID changed for an entity.
+       */
+      export type ID = Snowflake.Raw;
+      export const ID = "id";
+
       export namespace Guild {
+        /**
+         * The name of a guild was changed.
+         */
+        export type Name = string;
+        export const Name = "name";
+
         export namespace AFK {
           /**
            * AFK channel changed.
@@ -202,12 +277,6 @@ export namespace AuditLog {
           export type Timeout = number;
           export const Timeout = "afk_timeout";
         }
-
-        /**
-         * The ID changed for a guild.
-         */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
 
         /**
          * The guild banner was changed.
@@ -242,15 +311,25 @@ export namespace AuditLog {
         export type Icon = string;
         export const Icon = "icon_hash";
 
-        export type MFALevel = GuildNS;
+        /**
+         * The two-factor/multi-factor authentication requirement was changed.
+         */
+        export type MFALevel = GuildNS.MFARequirement;
+        export const MFALevel = "mfa_level";
+
+        /**
+         * The owner of the guild was changed.
+         */
+        export type Owner = Snowflake.Raw;
+        export const Owner = "owner_id";
       }
 
       export namespace Integration {
         /**
-         * The ID changed for a integration.
+         * The name of an integration was changed.
          */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
+        export type Name = string;
+        export const Name = "name";
 
         /**
          * Emoticons for an integration were enabled or disabled.
@@ -261,14 +340,8 @@ export namespace AuditLog {
         /**
          * Integration subscription expiry behaviour was changed.
          */
-        export type ExpireBehavior = number;
+        export type ExpireBehaviour = GuildNS.Integration.ExpireBehaviour;
         export const ExpireBehavior = "expire_behavior";
-
-        /**
-         * Integration subscription expiry behaviour was changed.
-         */
-        export type ExpireBehaviour = ExpireBehavior;
-        export const ExpireBehaviour = ExpireBehavior;
 
         /**
          * An integration's grace period length was changed for subscription expiries.
@@ -279,10 +352,10 @@ export namespace AuditLog {
 
       export namespace Channel {
         /**
-         * The ID changed for a channel.
+         * The name of a channel was changed.
          */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
+        export type Name = string;
+        export const Name = "name";
 
         /**
          * A bot or webhook was added to the channel.
@@ -308,14 +381,54 @@ export namespace AuditLog {
          */
         export type Description = string;
         export const Description = "description";
+
+        /**
+         * The position of a text or voice channel was changed.
+         */
+        export type Position = number;
+        export const Position = "position";
+
+        /**
+         * The channel's NSFW restriction was changed.
+         */
+        export type NSFW = boolean;
+        export const NSFW = "nsfw";
+
+        /**
+         * The permissions on a channel changed.
+         */
+        export type Permissions = ChannelNS.Overwrite;
+        export const Permissions = "permission_overwrites";
+
+        /**
+         * The channel cooldown has changed.
+         *
+         * @remarks
+         * The cooldown is the number of seconds
+         * a user has to wait before sending another message.
+         */
+        export type Cooldown = number;
+        export const Cooldown = "rate_limit_per_user";
+
+        /**
+         * The text channel was changed.
+         */
+        export type Topic = string;
+        export const Topic = "topic";
+
+        /**
+         * The user limit for a voice channel was changed.
+         */
+        export type UserLimit = number;
+        export const UserLimit = "user_limit";
       }
 
       export namespace Thread {
         /**
-         * The ID changed for a thread.
+         * The name of a thread was changed.
          */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
+        export type Name = string;
+        export const Name = "name";
 
         /**
          * Thread was archived or unarchived.
@@ -337,12 +450,6 @@ export namespace AuditLog {
       }
 
       export namespace Invite {
-        /**
-         * The ID changed for a invite.
-         */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
-
         /**
          * The channel an invite was made for was changed.
          */
@@ -376,10 +483,10 @@ export namespace AuditLog {
 
       export namespace Sticker {
         /**
-         * The ID changed for a sticker.
+         * The name of a sticker was changed.
          */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
+        export type Name = string;
+        export const Name = "name";
 
         /**
          * __An unknown and poorly documented audit log change key.__
@@ -400,7 +507,7 @@ export namespace AuditLog {
         export const Description = "description";
 
         /**
-         * Format type of sticker changed.
+         * The format type of a sticker changed.
          */
         export type Format = StickerNS.Format;
         export const Format = "format_type";
@@ -414,22 +521,31 @@ export namespace AuditLog {
 
       export namespace User {
         /**
-         * The ID changed for a user.
-         */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
-
-        /**
          * The avatar of a user was changed.
          */
         export type Avatar = string;
         export const Avatar = "avatar_hash";
 
         /**
-         * User was server deafened or undeafened.
+         * A user was server deafened or undeafened.
          */
         export type Deaf = boolean;
         export const Deaf = "deaf";
+
+        /**
+         * A user was server muted or unmuted.
+         */
+        export type Mute = boolean;
+        export const Mute = "mute";
+
+        /**
+         * The nickname of a user was changed.
+         *
+         * @remarks
+         * The nickname of a user may only be 32 characters long.
+         */
+        export type Nickname = string;
+        export const Nickname = "nick";
       }
 
       /**
@@ -437,25 +553,19 @@ export namespace AuditLog {
        */
       export namespace Role {
         /**
-         * The ID changed for a role.
-         */
-        export type ID = Snowflake.Raw;
-        export const ID = "id";
-
-        /**
-         * The name was changed for a role.
+         * The name of a role was changed.
          */
         export type Name = string;
         export const Name = "name";
 
         /**
-         * A role was added to a server.
+         * A role was added to a guild.
          */
         export type Add = GuildNS.Role.Partial;
         export const Add = "$add";
 
         /**
-         * A role was removed from a server.
+         * A role was removed from a guild.
          */
         export type Remove = GuildNS.Role.Partial;
         export const Remove = "$remove";
@@ -475,14 +585,8 @@ export namespace AuditLog {
         /**
          * The colour was changed for a role.
          */
-        export type Color = number;
-        export const Color = "color";
-
-        /**
-         * The colour was changed for a role.
-         */
-        export type Colour = Color;
-        export const Colour = Color;
+        export type Colour = number;
+        export const Colour = "color";
 
         /**
          * The role was set as either mentionable or unmentionable.
@@ -518,14 +622,52 @@ export namespace AuditLog {
   }
 
   interface _Entry<Type extends Event = Event> {
+    /**
+     * The ID of the affected entity (webhook, user, role, etc.)
+     */
     target_id: Nullable<Snowflake.Raw>;
+
+    /**
+     * The changes made to the affected entity.
+     */
     changes?: Change[];
+
+    /**
+     * The ID of the user who made the changes.
+     */
     user_id: Nullable<Snowflake.Raw>;
+
+    /**
+     * The ID of the entry.
+     */
     id: Snowflake.Raw;
+
+    /**
+     * The type of action that occurred.
+     *
+     * @see {@link Event | Event}
+     */
     action_type: Type;
+
+    /**
+     * Additional info for certain action types.
+     */
     options?: Type extends keyof _OptionsMapper ? _OptionsMapper[Type]
       : Options;
+
+    /**
+     * The reason for the change.
+     *
+     * @remarks
+     * Entry reasons may only be 0-512 characters long.
+     */
     reason?: string;
+  }
+
+  // @ts-ignore Empty for now due to the TODO.
+  // deno-lint-ignore no-empty-interface
+  interface _ChangeKeyMapper {
+    // TODO(@zorbyte): Do this huge job that will be a pain in my ass.
   }
 
   interface _OptionsMapper {

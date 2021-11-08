@@ -22,6 +22,6 @@ export namespace Team {
     membership_state: State;
     permissions: Permissions;
     team_id: Snowflake;
-    user: User.Partial;
+    user: Omit<User.Partial, "flags">;
   }
 }
