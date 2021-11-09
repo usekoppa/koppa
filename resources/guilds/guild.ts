@@ -111,7 +111,7 @@ export namespace Guild {
     /**
      * The ID of the guild.
      */
-    id: Snowflake.Raw;
+    id: Snowflake;
 
     /**
      * The name of the guild.
@@ -225,7 +225,7 @@ export namespace Guild {
       /**
        * The ID of the integration.
        */
-      id: Snowflake.Raw;
+      id: Snowflake;
 
       /**
        * The name of the integration.

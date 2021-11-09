@@ -9,7 +9,7 @@ export namespace Channel {
   }
 
   export interface Overwrite {
-    id: Snowflake.Raw;
+    id: Snowflake;
     type: Overwrite.Type;
     allow: Permissions.Raw;
     deny: Permissions.Raw;

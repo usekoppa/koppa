@@ -55,7 +55,7 @@ export namespace User {
   }
 
   export interface Partial {
-    id: Snowflake.Raw;
+    id: Snowflake;
     username: string;
     discriminator: Discriminator;
     avatar: Nullable<string>;
@@ -63,7 +63,7 @@ export namespace User {
   }
 
   export interface Connection {
-    id: Snowflake.Raw;
+    id: Snowflake;
     name: string;
     type: string;
     revoked?: boolean;
@@ -102,9 +102,8 @@ export namespace User {
       }
 
       export namespace User {
-        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> =
-          `/users/${ID}`;
-        export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
+        export type Route<ID extends Snowflake = Snowflake> = `/users/${ID}`;
+        export function Route<ID extends Snowflake = Snowflake>(
           userID: ID,
         ): Route<ID> {
           return `/users/${userID}`;
@@ -120,8 +119,8 @@ export namespace User {
         export const Route: Route = "/users/@me/guilds";
 
         export interface QueryString {
-          before: Snowflake.Raw;
-          after: Snowflake.Raw;
+          before: Snowflake;
+          after: Snowflake;
           limit: number;
         }
 
@@ -130,11 +129,9 @@ export namespace User {
           export const Scopes: Scopes = [OAuth2NS.Scopes.Guilds.Guilds];
         }
 
-        export namespace Response {
-          export interface Data extends Guild.Partial {
-            owner: boolean;
-            permissions: string;
-          }
+        export interface Response extends Guild.Partial {
+          owner: boolean;
+          permissions: string;
         }
       }
 
@@ -147,9 +144,7 @@ export namespace User {
           export const Scopes: Scopes = [OAuth2NS.Scopes.Guilds.Guilds];
         }
 
-        export namespace Response {
-          export type Data = Connection[];
-        }
+        export type Response = Connection[];
       }
     }
 
@@ -172,9 +167,7 @@ export namespace User {
           avatar?: Nullable<string>;
         }
 
-        export namespace Response {
-          export type Data = User;
-        }
+        export type Response = User;
       }
     }
 
@@ -187,13 +180,12 @@ export namespace User {
           /**
            * The recipient to open a DM channel with.
            */
-          recipient_id: Snowflake.Raw;
+          recipient_id: Snowflake;
         }
 
-        export namespace Response {
-          export type Data = Channel.DM.Channel;
-        }
+        export type Response = Channel.DM.Channel;
       }
+
       export namespace CreateGroupDM {
         export type Route = "/users/@me/channels";
         export const Route: Route = "/users/@me/channels";
@@ -214,32 +206,23 @@ export namespace User {
            * A dictionary of user IDs to their respective nicknames.
            */
           nicks: {
-            [userID: Snowflake.Raw]: string;
+            [userID: Snowflake]: string;
           };
         }
 
-        export namespace Response {
-          export type Data = Channel.DM.GroupDM;
-        }
+        export type Response = Channel.DM.GroupDM;
       }
     }
 
     export namespace DELETE {
       export namespace LeaveGuild {
-        export type Route<ID extends Snowflake.Raw = Snowflake.Raw> =
+        export type Route<ID extends Snowflake = Snowflake> =
           `/users/@me/guilds/${ID}`;
 
-        export function Route<ID extends Snowflake.Raw = Snowflake.Raw>(
+        export function Route<ID extends Snowflake = Snowflake>(
           userID: ID,
         ): Route<ID> {
           return `/users/@me/guilds/${userID}`;
-        }
-
-        export namespace Response {
-          export type Status = 204;
-          export const Status: Status = 204;
-
-          export type Data = never;
         }
       }
     }

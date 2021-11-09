@@ -125,7 +125,7 @@ export namespace AuditLog {
     /**
      * Channel in which the entities were targeted.
      */
-    channel_id: Snowflake.Raw;
+    channel_id: Snowflake;
 
     /**
      * The number of entities that were targeted.
@@ -140,7 +140,7 @@ export namespace AuditLog {
     /**
      * The ID of the entry.
      */
-    id: Snowflake.Raw;
+    id: Snowflake;
 
     /**
      * The number of members removed by a prune.
@@ -150,7 +150,7 @@ export namespace AuditLog {
     /**
      * ID of the message that was pinned/unpinned.
      */
-    message_id: Snowflake.Raw;
+    message_id: Snowflake;
 
     /**
      * Name of the role a channel overwrite was modified for.
@@ -266,7 +266,7 @@ export namespace AuditLog {
       /**
        * The ID changed for an entity.
        */
-      export type ID = Snowflake.Raw;
+      export type ID = Snowflake;
       export const ID = "id";
 
       /**
@@ -306,7 +306,7 @@ export namespace AuditLog {
           /**
            * AFK channel changed.
            */
-          export type Channel = Snowflake.Raw;
+          export type Channel = Snowflake;
           export const Channel = "afk_channel_id";
 
           /**
@@ -358,13 +358,13 @@ export namespace AuditLog {
         /**
          * The owner of the guild was changed.
          */
-        export type Owner = Snowflake.Raw;
+        export type Owner = Snowflake;
         export const Owner = "owner_id";
 
         /**
          * The system channel was changed.
          */
-        export type SystemChannel = Snowflake.Raw;
+        export type SystemChannel = Snowflake;
         export const SystemChannel = "system_channel_id";
 
         /**
@@ -382,7 +382,7 @@ export namespace AuditLog {
         /**
          * The public updates channel was changed.
          */
-        export type PublicUpdatesChannel = Snowflake.Raw;
+        export type PublicUpdatesChannel = Snowflake;
         export const PublicUpdatesChannel = "public_updates_channel_id";
 
         /**
@@ -394,7 +394,7 @@ export namespace AuditLog {
         /**
          * The guild's rule channel was changed.
          */
-        export type RulesChannel = Snowflake.Raw;
+        export type RulesChannel = Snowflake;
         export const RulesChannel = "rules_channel_id";
 
         /**
@@ -418,7 +418,7 @@ export namespace AuditLog {
         /**
          * The widget channel for the guild was changed.
          */
-        export type WidgetChannel = Snowflake.Raw;
+        export type WidgetChannel = Snowflake;
         export const WidgetChannel = "widget_channel_id";
 
         /**
@@ -489,7 +489,7 @@ export namespace AuditLog {
         /**
          * A bot or webhook was added to the channel.
          */
-        export type Application = Snowflake.Raw;
+        export type Application = Snowflake;
         export const Application = "application_id";
 
         /**
@@ -603,7 +603,7 @@ export namespace AuditLog {
         /**
          * The channel an invite was made for was changed.
          */
-        export type Channel = Snowflake.Raw;
+        export type Channel = Snowflake;
         export const Channel = "channel_id";
 
         /**
@@ -615,7 +615,7 @@ export namespace AuditLog {
         /**
          * The inviter changed for an invite.
          */
-        export type Inviter = Snowflake.Raw;
+        export type Inviter = Snowflake;
         export const Inviter = "inviter_id";
 
         /**
@@ -689,7 +689,7 @@ export namespace AuditLog {
         /**
          * The guild the sticker is in was changed.
          */
-        export type Guild = Snowflake.Raw;
+        export type Guild = Snowflake;
         export const Guild = "guild_id";
 
         /**
@@ -822,25 +822,23 @@ export namespace AuditLog {
   export namespace REST {
     export namespace GET {
       export namespace GuildAuditLog {
-        export type Route<ID extends Snowflake.Raw> =
+        export type Route<ID extends Snowflake = Snowflake> =
           `/guilds/${ID}/audit-logs`;
 
-        export function Route<ID extends Snowflake.Raw>(
+        export function Route<ID extends Snowflake = Snowflake>(
           guildID: ID,
         ): Route<ID> {
           return `/guilds/${guildID}/audit-logs`;
         }
 
         export interface QueryString {
-          user_id: Snowflake.Raw;
+          user_id: Snowflake;
           action_type: Event;
-          before: Snowflake.Raw;
+          before: Snowflake;
           limit: number;
         }
 
-        export namespace Response {
-          export type Data = AuditLog;
-        }
+        export type Response = AuditLog;
       }
     }
   }
@@ -849,7 +847,7 @@ export namespace AuditLog {
     /**
      * The ID of the affected entity (webhook, user, role, etc.)
      */
-    target_id: Nullable<Snowflake.Raw>;
+    target_id: Nullable<Snowflake>;
 
     /**
      * The changes made to the affected entity.
@@ -859,12 +857,12 @@ export namespace AuditLog {
     /**
      * The ID of the user who made the changes.
      */
-    user_id: Nullable<Snowflake.Raw>;
+    user_id: Nullable<Snowflake>;
 
     /**
      * The ID of the entry.
      */
-    id: Snowflake.Raw;
+    id: Snowflake;
 
     /**
      * The type of action that occurred.

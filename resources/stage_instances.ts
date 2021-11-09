@@ -21,17 +21,17 @@ export interface StageInstance {
   /**
    * The ID of this Stage instance.
    */
-  id: Snowflake.Raw;
+  id: Snowflake;
 
   /**
    * The ID of the guild associated with the Stage channel.
    */
-  guild_id: Snowflake.Raw;
+  guild_id: Snowflake;
 
   /**
    * The ID of the associated Stage channel.
    */
-  channel_id: Snowflake.Raw;
+  channel_id: Snowflake;
 
   /**
    * The topic of the Stage instance.

@@ -10,7 +10,7 @@ export interface Application {
   /**
    * The ID of the application.
    */
-  id: Snowflake.Raw;
+  id: Snowflake;
 
   /**
    * The name of the application.
@@ -84,13 +84,13 @@ export interface Application {
    * If this application is a game sold on Discord,
    * this field will be the ID of the guild to which it has been linked to.
    */
-  guild_id?: Snowflake.Raw;
+  guild_id?: Snowflake;
 
   /**
    * If this application is a game sold on Discord,
    * this field will be the ID of the game's Stock Keeping Unit (SKU) that is created.
    */
-  primary_sku_id?: Snowflake.Raw;
+  primary_sku_id?: Snowflake;
 
   /**
    * If this application is a game sold on Discord,

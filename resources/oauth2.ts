@@ -1,6 +1,7 @@
-export namespace OAuth2 {
-  export type Route = "/oauth2";
+import { Application } from "../types/application.ts";
+import { User } from "./user.ts";
 
+export namespace OAuth2 {
   export type Scopes =
     | Scopes.Activities.Read
     | Scopes.Activities.Write
@@ -134,6 +135,79 @@ export namespace OAuth2 {
     export namespace Webhook {
       export type Incoming = "webhook.incoming";
       export const Incoming: Incoming = "webhook.incoming";
+    }
+  }
+
+  export namespace REST {
+    export namespace GET {
+      /**
+       * Returns the bot's application object without flags.
+       */
+      export namespace CurrentBotApplicationInformation {
+        export type Route = "/oauth2/applications/@me";
+        export const Route: Route = "/oauth2/applications/@me";
+
+        export type Response = Omit<Application.Bot, "flags">;
+      }
+
+      /**
+       * Returns info about the current authorisation.
+       *
+       * @remarks
+       * Requires authentication with a bearer token.
+       */
+      export namespace CurrentAuthorisationInformation {
+        export type Route = "/oauth2/@me";
+        export const Route: Route = "/oauth2/@me";
+
+        export interface Headers<Token extends string = string> {
+          Authorization: `Bearer ${Token}`;
+        }
+
+        export function Headers<Token extends string>(
+          token: Token,
+        ): Headers<Token> {
+          return {
+            Authorization: `Bearer ${token}`,
+          };
+        }
+
+        export interface Response {
+          /**
+           * The current application.
+           */
+          application: Pick<
+            Application,
+            | "id"
+            | "name"
+            | "icon"
+            | "description"
+            | "summary"
+            | "bot_public"
+            | "bot_require_code_grant"
+            | "verify_key"
+          >;
+
+          /**
+           * The scopes the user has authorised the application for.
+           */
+          scopes: Scopes[];
+
+          /**
+           * When the access token expires.
+           *
+           * @remarks
+           * Uses ISO 8601 format.
+           */
+          expires: string;
+
+          /**
+           * Te user who has authorised,
+           * if the user has authorised with the identify scope
+           */
+          user?: User.Partial;
+        }
+      }
     }
   }
 }
