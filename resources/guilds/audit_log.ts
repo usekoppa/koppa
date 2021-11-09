@@ -1,5 +1,5 @@
 import { Snowflake } from "../../types/snowflake.ts";
-import { $TODO, Nullable } from "../../_internals/utils.ts";
+import { Nullable } from "../../_internals/utils.ts";
 import { Channel as ChannelNS } from "../channel.ts";
 import { Guild as GuildNS } from "./guild.ts";
 import { Sticker as StickerNS } from "./sticker.ts";
@@ -230,24 +230,27 @@ export namespace AuditLog {
    *
    * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure | Audit Log Change Structure}
    */
-  export interface Change {
+  export interface Change<Value extends Change.Key = unknown> {
     /**
      * The new value of the key.
      */
-    new_value?: $TODO;
+    new_value?: Value;
 
     /**
      * The old value of the key
      */
-    old_value?: $TODO;
+    old_value?: Value;
 
     /**
      * The name of audit log change key.
      */
-    key: Change.Key;
+    key: string;
   }
 
   export namespace Change {
+    /**
+     * The type of the aspect in question that changed with this entry.
+     */
     export type Key =
       | Key.ID
       | Key.Channel
@@ -266,6 +269,9 @@ export namespace AuditLog {
       export type ID = Snowflake.Raw;
       export const ID = "id";
 
+      /**
+       * The guild's settings were been modified/created/deleted.
+       */
       export type Guild =
         | Key.Guild.AFK.Channel
         | Key.Guild.AFK.Timeout
@@ -355,40 +361,76 @@ export namespace AuditLog {
         export type Owner = Snowflake.Raw;
         export const Owner = "owner_id";
 
+        /**
+         * The system channel was changed.
+         */
         export type SystemChannel = Snowflake.Raw;
         export const SystemChannel = "system_channel_id";
 
+        /**
+         * The guild's preferred locale was changed.
+         */
         export type PreferredLocale = string;
         export const PreferredLocale = "preferred_locale";
 
+        /**
+         * The number of days after which inactive and role-unassigned members are kicked was changed.
+         */
         export type PruneKickPeriod = number;
         export const PruneKickPeriod = "prune_delete_days";
 
+        /**
+         * The public updates channel was changed.
+         */
         export type PublicUpdatesChannel = Snowflake.Raw;
         export const PublicUpdatesChannel = "public_updates_channel_id";
 
+        /**
+         * The guild's region was changed.
+         */
         export type Region = string;
         export const Region = "region";
 
+        /**
+         * The guild's rule channel was changed.
+         */
         export type RulesChannel = Snowflake.Raw;
         export const RulesChannel = "rules_channel_id";
 
+        /**
+         * The guild's invite splash screen image was changed.
+         */
         export type Splash = string;
         export const Splash = "splash_hash";
 
+        /**
+         * The guild's vanity invite code was changed.
+         */
         export type VanityURLCode = string;
         export const VanityURLCode = "vanity_url_code";
 
+        /**
+         * The guild's verification level was changed.
+         */
         export type VerificationLevel = GuildNS.VerificationLevel;
         export const VerificationLevel = "verification_level";
 
+        /**
+         * The widget channel for the guild was changed.
+         */
         export type WidgetChannel = Snowflake.Raw;
         export const WidgetChannel = "widget_channel_id";
 
+        /**
+         * The guild's widget was enabled or disabled.
+         */
         export type Widget = boolean;
         export const Widget = "widget_enabled";
       }
 
+      /**
+       * A guild integration was been modified/created/deleted.
+       */
       export type Integration =
         | Integration.Emoticons
         | Integration.ExpireBehaviour
@@ -421,6 +463,9 @@ export namespace AuditLog {
         export const ExpiryGracePeriod = "expire_grace_period";
       }
 
+      /**
+       * A channel was been modified/created/deleted.
+       */
       export type Channel =
         | Channel.Application
         | Channel.Bitrate
@@ -507,6 +552,9 @@ export namespace AuditLog {
         export const UserLimit = "user_limit";
       }
 
+      /**
+       * A thread was been modified/created/deleted.
+       */
       export type Thread =
         | Thread.Archived
         | Thread.AutoArchiveDuration
@@ -539,6 +587,9 @@ export namespace AuditLog {
         export const Lock = "locked";
       }
 
+      /**
+       * An invite was been modified/created/deleted.
+       */
       export type Invite =
         | Invite.Channel
         | Invite.Code
@@ -579,13 +630,22 @@ export namespace AuditLog {
         export type MaxUses = number;
         export const MaxUses = "max_uses";
 
+        /**
+         * The number of times the invite has been used has changed.
+         */
         export type Uses = number;
         export const Uses = "uses";
 
+        /**
+         * The invite code has been set to temporary or permanent.
+         */
         export type Temporary = boolean;
         export const Temporary = "temporary";
       }
 
+      /**
+       * A sticker was been modified/created/deleted.
+       */
       export type Sticker =
         | Sticker.Asset
         | Sticker.Available
@@ -632,10 +692,16 @@ export namespace AuditLog {
         export type Guild = Snowflake.Raw;
         export const Guild = "guild_id";
 
+        /**
+         * The related emoji of a sticker has changed.
+         */
         export type RelatedEmoji = string;
         export const RelatedEmoji = "tags";
       }
 
+      /**
+       * A user was been modified/created/deleted.
+       */
       export type User = User.Avatar | User.Deaf | User.Mute | User.Nickname;
 
       export namespace User {
@@ -822,17 +888,18 @@ export namespace AuditLog {
     reason?: string;
   }
 
-  // @ts-ignore Empty for now due to the TODO.
-  // deno-lint-ignore no-empty-interface
-  interface _ChangeKeyMapper {
-    [Change.Key.ID]: Change.Key.ID;
-    [Change.Key.Channel.Application]: Change.Key.Channel.Application;
-    [Change.Key.Channel.Bitrate]: Change.Key.Channel.Bitrate;
-    [Change.Key.Guild.Name]: Change.Key.Guild.Name;
-    // TODO(@zorbyte): Do this huge job that will be a pain in my ass.
-  }
-
-  declare const a: _ChangeKeyMapper[typeof Change.Key.Guild.Name];
+  // interface _ChangeKeyMapper {
+  //   [Change.Key.ID]: Change.Key.ID;
+  //   [Change.Key.Channel.Application]: Change.Key.Channel.Application;
+  //   [Change.Key.Channel.Bitrate]: Change.Key.Channel.Bitrate;
+  //   [Change.Key.Guild.Name]: Change.Key.Guild.Name;
+  //   [Change.Key.Guild.Owner]: Change.Key.Guild.Owner;
+  //   [Change.Key.Guild.PreferredLocale]: Change.Key.Guild.PreferredLocale;
+  //   [Change.Key.Guild.PruneKickPeriod]: Change.Key.Guild.PruneKickPeriod;
+  //   [Change.Key.Guild.PublicUpdatesChannel]:
+  //     Change.Key.Guild.PublicUpdatesChannel;
+  //   // TODO(@zorbyte): Do this huge job that will be a pain in my ass.
+  // }
 
   interface _OptionsMapper {
     [Event.ChannelOverwriteCreate]: Options.ChannelOverwrite;
