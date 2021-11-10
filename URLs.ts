@@ -1,4 +1,4 @@
-import { Gateway as GatewayNS } from "./resources/gateway/gateway.ts";
+import { Gateway as GatewayNS } from "./resources/gateway.ts";
 
 /**
  * The API version that this library is modelled after.

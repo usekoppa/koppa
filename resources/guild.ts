@@ -1,7 +1,7 @@
-import { Snowflake } from "../../types/snowflake.ts";
-import { $TODO, Nullable } from "../../_internals/utils.ts";
-import { Application } from "../../types/application.ts";
-import { User } from "../user.ts";
+import { Snowflake } from "../types/snowflake.ts";
+import { $TODO, Nullable } from "../_internals/utils.ts";
+import { Application } from "../types/application.ts";
+import { User } from "./user.ts";
 
 /**
  * A guild object.

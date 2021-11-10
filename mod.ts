@@ -2,10 +2,10 @@ export * from "./URLs.ts";
 export * from "./discord_epoch.ts";
 
 export * from "./resources/channel.ts";
-export * from "./resources/gateway/gateway.ts";
-export * from "./resources/guilds/audit_log.ts";
-export * from "./resources/guilds/guild.ts";
-export * from "./resources/guilds/sticker.ts";
+export * from "./resources/gateway.ts";
+export * from "./resources/guild.ts";
+export * from "./resources/guild/audit_log.ts";
+export * from "./resources/guild/sticker.ts";
 export * from "./resources/oauth2.ts";
 export * from "./resources/stage_instances.ts";
 export * from "./resources/user.ts";

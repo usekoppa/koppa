@@ -1,8 +1,8 @@
 import { Snowflake } from "../../types/snowflake.ts";
 import { Nullable } from "../../_internals/utils.ts";
 import { Channel as ChannelNS } from "../channel.ts";
-import { Guild as GuildNS } from "./guild.ts";
-import { Sticker as StickerNS } from "./sticker.ts";
+import { Guild as GuildNS } from "../guild.ts";
+import { Sticker as StickerNS } from "../sticker.ts";
 import { User } from "../user.ts";
 import { Webhook } from "../webhook.ts";
 
@@ -821,7 +821,7 @@ export namespace AuditLog {
 
   export namespace REST {
     export namespace GET {
-      export namespace GuildAuditLog {
+      export namespace GetGuildAuditLog {
         export type Route<ID extends Snowflake = Snowflake> =
           `/guilds/${ID}/audit-logs`;
 

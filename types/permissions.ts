@@ -6,5 +6,5 @@ export namespace Permissions {
     // TODO(@zorbyte): Write all of these.
   }
 
-  export type Raw = `${number}`;
+  export type Raw = `${Flags}`;
 }

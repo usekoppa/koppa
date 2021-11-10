@@ -2,7 +2,7 @@ import { OAuth2 as OAuth2NS } from "./oauth2.ts";
 import { Snowflake } from "../types/snowflake.ts";
 import { Nullable, ZeroToNine } from "../_internals/utils.ts";
 import { Channel } from "./channel.ts";
-import { Guild } from "./guilds/guild.ts";
+import { Guild } from "./guild.ts";
 
 /**
  * Users in Discord are generally considered the base entity.
@@ -83,7 +83,7 @@ export namespace User {
 
   export namespace REST {
     export namespace GET {
-      export namespace CurrentUser {
+      export namespace GetCurrentUser {
         export type Route = "/users/@me";
         export const Route: Route = "/users/@me";
 
@@ -96,12 +96,10 @@ export namespace User {
           export const Scopes: Scopes = [OAuth2NS.Scopes.Identify];
         }
 
-        export namespace Response {
-          export type Data = User & Required<Pick<User, "email">>;
-        }
+        export type Response = User;
       }
 
-      export namespace User {
+      export namespace GetUser {
         export type Route<ID extends Snowflake = Snowflake> = `/users/${ID}`;
         export function Route<ID extends Snowflake = Snowflake>(
           userID: ID,
@@ -109,12 +107,10 @@ export namespace User {
           return `/users/${userID}`;
         }
 
-        export namespace Response {
-          export type Data = User;
-        }
+        export type Response = User;
       }
 
-      export namespace CurrentUserGuilds {
+      export namespace GetCurrentUserGuilds {
         export type Route = "/users/@me/guilds";
         export const Route: Route = "/users/@me/guilds";
 
@@ -135,7 +131,7 @@ export namespace User {
         }
       }
 
-      export namespace UserConnections {
+      export namespace GetUserConnections {
         export type Route = "/users/@me/connections";
         export const Route: Route = "/users/@me/connections";
 
