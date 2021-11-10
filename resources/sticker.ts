@@ -51,10 +51,10 @@ export namespace Sticker {
   export namespace REST {
     export namespace GET {
       export namespace GetSticker {
-        export type Route<ID extends Snowflake = Snowflake> = `/stickers/${ID}`;
-        export function Route<ID extends Snowflake>(
-          stickerID: ID,
-        ): Route<ID> {
+        export type Route<StickerID extends Snowflake = Snowflake> = `/stickers/${StickerID}`;
+        export function Route<StickerID extends Snowflake>(
+          stickerID: StickerID,
+        ): Route<StickerID> {
           return `/stickers/${stickerID}`;
         }
 
@@ -71,10 +71,12 @@ export namespace Sticker {
       }
 
       export namespace ListGuildStickers {
-        export type Route<ID extends Snowflake = Snowflake> =
-          `/guilds/${ID}/stickers`;
+        export type Route<GuildID extends Snowflake = Snowflake> =
+          `/guilds/${GuildID}/stickers`;
 
-        export function Route<ID extends Snowflake>(guildID: ID): Route<ID> {
+        export function Route<GuildID extends Snowflake>(
+          guildID: GuildID,
+        ): Route<GuildID> {
           return `/guilds/${guildID}/stickers`;
         }
 
@@ -104,10 +106,12 @@ export namespace Sticker {
 
     export namespace POST {
       export namespace CreateGuildSticker {
-        export type Route<ID extends Snowflake = Snowflake> =
-          `/guilds/${ID}/stickers`;
+        export type Route<GuildID extends Snowflake = Snowflake> =
+          `/guilds/${GuildID}/stickers`;
 
-        export function Route<ID extends Snowflake>(guildID: ID): Route<ID> {
+        export function Route<GuildID extends Snowflake>(
+          guildID: GuildID,
+        ): Route<GuildID> {
           return `/guilds/${guildID}/stickers`;
         }
 

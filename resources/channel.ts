@@ -1,6 +1,7 @@
 import { Permissions } from "../types/permissions.ts";
 import { Snowflake } from "../types/snowflake.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
+import { Thread } from "./thread.ts";
 import { User } from "./user.ts";
 
 export interface Channel extends Channel.Partial {
@@ -23,8 +24,9 @@ export interface Channel extends Channel.Partial {
   rtc_region?: Nullable<string>;
   video_quality_mode?: Channel.VideoQualityMode;
   message_count?: number;
-  thread_metadata?: $TODO;
-  member?: $TODO;
+  member_count?: number;
+  thread_metadata?: Thread.Metadata;
+  member?: Thread.Member;
   default_auto_archive_duration?: number;
   permissions?: Permissions.Raw;
 }
@@ -49,10 +51,11 @@ export namespace Channel {
     Full = 2,
   }
 
-  export interface Partial {
+  export interface Partial<Type extends Channel.Type = Channel.Type> {
     id: Snowflake;
-    type: Channel.Type;
+    type: Type;
   }
+
   export namespace DM {
     export type Channel = $TODO;
     export type GroupDM = $TODO;
@@ -72,6 +75,6 @@ export namespace Channel {
     }
   }
 
-  export type Thread = $TODO;
-  export namespace Thread {}
+  export namespace REST {
+  }
 }

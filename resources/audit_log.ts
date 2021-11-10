@@ -1,10 +1,11 @@
-import { Snowflake } from "../../types/snowflake.ts";
-import { Nullable } from "../../_internals/utils.ts";
-import { Channel as ChannelNS } from "../channel.ts";
-import { Guild as GuildNS } from "../guild.ts";
-import { Sticker as StickerNS } from "../sticker.ts";
-import { User } from "../user.ts";
-import { Webhook } from "../webhook.ts";
+import { Snowflake } from "./../types/snowflake.ts";
+import { Nullable } from "./../_internals/utils.ts";
+import { Channel as ChannelNS } from "./channel.ts";
+import { Guild as GuildNS } from "./guild.ts";
+import { Sticker as StickerNS } from "./sticker.ts";
+import { Thread } from "./thread.ts";
+import { User } from "./user.ts";
+import { Webhook } from "./webhook.ts";
 
 /**
  * An audit log object associated with a guild.
@@ -29,7 +30,7 @@ export interface AuditLog {
    * Threads referenced in {@link AuditLog.Event.ThreadCreate | "THREAD_CREATE"} and {@link AuditLog.Event.ThreadUpdate | "THREAD_UPDATE"}
    * events are included in the threads map, since archived threads might not be kept in memory by clients.
    */
-  threads: ChannelNS.Thread[];
+  threads: Thread[];
 
   /**
    * The users found in a guild's Audit Log.

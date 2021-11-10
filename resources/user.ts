@@ -100,10 +100,10 @@ export namespace User {
       }
 
       export namespace GetUser {
-        export type Route<ID extends Snowflake = Snowflake> = `/users/${ID}`;
-        export function Route<ID extends Snowflake = Snowflake>(
-          userID: ID,
-        ): Route<ID> {
+        export type Route<UserID extends Snowflake = Snowflake> = `/users/${UserID}`;
+        export function Route<UserID extends Snowflake>(
+          userID: UserID,
+        ): Route<UserID> {
           return `/users/${userID}`;
         }
 
@@ -212,15 +212,17 @@ export namespace User {
 
     export namespace DELETE {
       export namespace LeaveGuild {
-        export type Route<ID extends Snowflake = Snowflake> =
-          `/users/@me/guilds/${ID}`;
+        export type Route<UserID extends Snowflake = Snowflake> =
+          `/users/@me/guilds/${UserID}`;
 
-        export function Route<ID extends Snowflake = Snowflake>(
-          userID: ID,
-        ): Route<ID> {
+        export function Route<UserID extends Snowflake>(
+          userID: UserID,
+        ): Route<UserID> {
           return `/users/@me/guilds/${userID}`;
         }
       }
     }
   }
 }
+
+User.REST.GET.GetCurrentUser.Route

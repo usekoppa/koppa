@@ -2,6 +2,7 @@ import { Snowflake } from "../types/snowflake.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
 import { Application } from "../types/application.ts";
 import { User } from "./user.ts";
+import { Thread } from "./thread.ts";
 
 /**
  * A guild object.
@@ -269,6 +270,29 @@ export namespace Guild {
   export type Role = Role.Partial;
   export namespace Role {
     export type Partial = $TODO;
+  }
+
+  export namespace REST {
+    export namespace GET {
+      export namespace ListActiveThreads {
+        export type Route<
+          GuildID extends Snowflake = Snowflake,
+        > = `/guilds/${GuildID}/threads/active`;
+
+        function Route<
+          ChannelID extends Snowflake,
+        >(
+          guildID: ChannelID,
+        ): Route<ChannelID> {
+          return `/guilds/${guildID}/threads/active`;
+        }
+
+        export interface Response {
+          threads: Thread[];
+          members: Thread.Member[];
+        }
+      }
+    }
   }
 
   export namespace WS {
