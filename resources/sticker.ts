@@ -51,7 +51,8 @@ export namespace Sticker {
   export namespace REST {
     export namespace GET {
       export namespace GetSticker {
-        export type Route<StickerID extends Snowflake = Snowflake> = `/stickers/${StickerID}`;
+        export type Route<StickerID extends Snowflake = Snowflake> =
+          `/stickers/${StickerID}`;
         export function Route<StickerID extends Snowflake>(
           stickerID: StickerID,
         ): Route<StickerID> {
@@ -80,7 +81,7 @@ export namespace Sticker {
           return `/guilds/${guildID}/stickers`;
         }
 
-        export type Permissions = $TODO;
+        export type Permissions = $TODO<string>;
 
         export type Response = GuildSticker[];
       }
@@ -98,7 +99,7 @@ export namespace Sticker {
           return `/guilds/${guildID}/stickers/${stickerID}`;
         }
 
-        export type Permissions = $TODO;
+        export type Permissions = $TODO<string>;
 
         export type Response = GuildSticker;
       }
@@ -119,6 +120,10 @@ export namespace Sticker {
           "X-Audit-Log-Reason"?: string;
         }
 
+        export function Headers(reason?: string) {
+          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
+        }
+
         export interface Form {
           name: string;
           description: string;
@@ -135,7 +140,7 @@ export namespace Sticker {
           return form;
         }
 
-        export type Permissions = $TODO;
+        export type Permissions = $TODO<string>;
 
         export type Response =
           & GuildSticker
@@ -156,13 +161,17 @@ export namespace Sticker {
           "X-Audit-Log-Reason"?: string;
         }
 
+        export function Headers(reason?: string) {
+          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
+        }
+
         export interface Body {
           name: string;
           description: Nullable<string>;
           tags: string;
         }
 
-        export type Permissions = $TODO;
+        export type Permissions = $TODO<string>;
 
         export type Response = GuildSticker;
       }
@@ -179,6 +188,10 @@ export namespace Sticker {
 
         export interface Headers {
           "X-Audit-Log-Reason"?: string;
+        }
+
+        export function Headers(reason?: string) {
+          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
         }
       }
     }

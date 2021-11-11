@@ -157,9 +157,7 @@ export namespace User {
            */
           username?: string;
 
-          /**
-           * If passed, modifies the user's avatar.
-           */
+          /** If passed, modifies the user's avatar. */
           avatar?: Nullable<string>;
         }
 
@@ -198,9 +196,7 @@ export namespace User {
            */
           access_tokens: string[];
 
-          /**
-           * A dictionary of user IDs to their respective nicknames.
-           */
+          /** A dictionary of user IDs to their respective nicknames. */
           nicks: {
             [userID: Snowflake]: string;
           };
@@ -224,5 +220,3 @@ export namespace User {
     }
   }
 }
-
-User.REST.GET.GetCurrentUser.Route

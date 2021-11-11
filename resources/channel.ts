@@ -1,3 +1,4 @@
+import { ISO8601 } from "../types/ISO8601.ts";
 import { Permissions } from "../types/permissions.ts";
 import { Snowflake } from "../types/snowflake.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
@@ -20,7 +21,7 @@ export interface Channel extends Channel.Partial {
   owner_id?: Snowflake;
   application_id?: Snowflake;
   parent_id?: Nullable<string>;
-  last_pin_timestamp?: Nullable<string>;
+  last_pin_timestamp?: Nullable<ISO8601>;
   rtc_region?: Nullable<string>;
   video_quality_mode?: Channel.VideoQualityMode;
   message_count?: number;
