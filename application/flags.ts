@@ -1,4 +1,4 @@
-export const enum Flags {
+export enum ApplicationFlags {
   GatewayPresence = 1 << 12,
   GatewayPresenceLimited = 1 << 13,
   GatewayGuildMembers = 1 << 14,

@@ -1,5 +1,5 @@
-import { ISO8601 } from "../../types/ISO8601.ts";
-import { ThreadType } from "./thread_type.ts";
+import type { ISO8601 } from "../../types/mod.ts";
+import type { ThreadType } from "./type.ts";
 
 export interface ThreadMetadata<
   Type extends ThreadType = ThreadType.Public,

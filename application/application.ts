@@ -1,85 +1,37 @@
-import { Snowflake } from "../types/snowflake.ts";
+import type { Snowflake } from "../types/mod.ts";
 import { Nullable } from "../_internals/utils.ts";
-import { Team } from "../types/team.ts";
-import { User } from "../user.ts";
-import { Flags } from "./flags.ts";
+import { Team } from "./teams/mod.ts";
+import { User } from "../users/mod.ts";
+import { ApplicationFlags } from "./flags.ts";
 
-/**
- * Properties of an application
- */
+/** Properties of an application */
 export interface Application {
-  /**
-   * The ID of the application.
-   */
+  /** The ID of the application. */
   id: Snowflake;
-
-  /**
-   * The name of the application.
-   */
+  /** The name of the application. */
   name: string;
-
-  /**
-   * The icon (hash) of the application.
-   */
+  /** The icon (hash) of the application. */
   icon: Nullable<string>;
-
-  /**
-   * The description of the application.
-   */
+  /** The description of the application. */
   description: string;
-
-  /**
-   * An array of RPC origin URLs, if RPC is enabled.
-   */
+  /** An array of RPC origin URLs, if RPC is enabled. */
   rpc_origins?: string[];
-
-  /**
-   * Whether or not anyone can add the application's bot to a guild.
-   *
-   * @remarks
-   * Only the owner can add the bot if set to `false`;
-   */
+  /** Whether or not anyone can add the application's bot to a guild - Only the owner can add the bot if set to `false`. */
   bot_public: boolean;
-
-  /**
-   * When `true` the application's bot will only join upon completion of the full OAuth2 code grant flow.
-   */
+  /** When `true` the application's bot will only join upon completion of the full OAuth2 code grant flow. */
   bot_require_code_grant: boolean;
-
-  /**
-   * The URL of the application's Terms of Service.
-   */
+  /** The URL of the application's Terms of Service. */
   terms_of_service_url?: string;
-
-  /**
-   * The URL of the application's privacy policy.
-   */
+  /** The URL of the application's privacy policy. */
   privacy_policy_url?: string;
-
-  /**
-   * Information about the owner of the application.
-   *
-   * @remarks
-   * Contains only partial and minimal user information.
-   */
+  /** Information about the owner of the application. */
   owner?: Omit<User.Partial, "flags">;
-
-  /**
-   * If this application is a game sold on Discord,
-   * this field will be the summary field for the store page of its primary SKU.
-   */
+  /** The summary field for the store page of its primary SKU - Only for for games sold on Discord. */
   summary: string;
-
-  /**
-   * The hexadecimally encoded key for verification in interactions and the GameSDK's `GetTicket` function.
-   */
+  /** The hexadecimally encoded key for verification in interactions and the GameSDK's `GetTicket` function. */
   verify_key: string;
-
-  /**
-   * If the application belongs to a team,
-   * this will be a means to access the list of the members of that team.
-   */
-  team?: Nullable<Pick<Team.Team, "id" | "icon" | "members">>;
+  /** If the application belongs to a team, this will be a means to access the list of the members of that team. */
+  team?: Nullable<Pick<Team, "id" | "icon" | "members">>;
 
   /**
    * If this application is a game sold on Discord,
@@ -98,22 +50,19 @@ export interface Application {
    * this field will be the URL slug that links to the store page.
    */
   slug?: string;
-
-  /**
-   * The application's default rich presence invite cover image (hash).
-   */
+  /** The application's default rich presence invite cover image (hash). */
   cover_image?: string;
-
-  /**
-   * The application's public flags
-   */
-  flags?: Flags | number;
+  /** The application's public flags. */
+  flags?: ApplicationFlags | number;
 }
 
+/**
+ * Application resource
+ *
+ * https://discord.com/developers/docs/resources/application
+ */
 export namespace Application {
-  /**
-   * The application structure found exclusively for bots.
-   */
+  /** The application structure found exclusively for bots. */
   export type Bot = Omit<
     Application,
     | "slug"
@@ -124,9 +73,7 @@ export namespace Application {
     | "cover_image"
   >;
 
-  /**
-   * The application structure found both both bots and/or RPC applications.
-   */
+  /** The application structure found both both bots and/or RPC applications. */
   export type RPC = Bot & Pick<Application, "rpc_origins" | "cover_image">;
 
   export namespace REST {

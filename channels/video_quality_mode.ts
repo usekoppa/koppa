@@ -1,4 +1,4 @@
-export const enum VideoQualityMode {
+export enum VideoQualityMode {
   Auto = 1,
   Full = 2,
 }

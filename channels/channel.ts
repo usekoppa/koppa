@@ -1,18 +1,16 @@
-import { ISO8601 } from "../types/ISO8601.ts";
-import { Permissions } from "../types/permissions.ts";
-import { Snowflake } from "../types/snowflake.ts";
+import { ISO8601, Snowflake } from "../types/mod.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
-import { User } from "../user/user.ts";
+import { User } from "../users/mod.ts";
 import { ChannelType } from "./channel_type.ts";
-import { Overwrite } from "./overwrites/overwrite.ts";
-import { ThreadMember } from "./threads/thread_member.ts";
-import { ThreadMetadata } from "./threads/thread_metadata.ts";
+import { PermissionOverwrite } from "./overwrites/mod.ts";
+import { ThreadMember, ThreadMetadata } from "./threads/mod.ts";
 import { VideoQualityMode } from "./video_quality_mode.ts";
+import { Permissions } from "../permissions/mod.ts";
 
 export interface Channel extends Channel.Partial {
   guild_id?: Snowflake;
   position?: number;
-  permissions_overwrites?: Overwrite[];
+  permissions_overwrites?: PermissionOverwrite[];
   name?: string;
   topic?: Nullable<string>;
   nsfw?: boolean;
@@ -46,4 +44,6 @@ export namespace Channel {
     export type Channel = $TODO;
     export type GroupDM = $TODO;
   }
+
+  export namespace REST {}
 }
