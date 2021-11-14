@@ -1,1 +1,3 @@
-export type { Connection } from "./connection.ts";
+export { UserConnectionVisibility } from "./visibility.ts";
+
+export * from "./connection.ts";
