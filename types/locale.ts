@@ -1,4 +1,4 @@
-export enum UserLocale {
+export enum Locale {
   Danish = "da",
   German = "de",
   AmericanEnglish = "en-US",

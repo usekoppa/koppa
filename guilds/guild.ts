@@ -1,4 +1,4 @@
-import { ISO8601, Snowflake } from "../types/mod.ts";
+import { ISO8601, Locale, Snowflake } from "../types/mod.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
 import { Permissions } from "../permissions/mod.ts";
 import { GuildVerificationLevel } from "./verification_level.ts";
@@ -10,7 +10,6 @@ import { SystemChannelFlags } from "./system_channel_flags.ts";
 import { Channel, Thread } from "../channels/mod.ts";
 import { GuildPremiumTier } from "./premium_tier.ts";
 import { GuildMFALevel } from "./mfa_level.ts";
-import { UserLocale } from "../users/mod.ts";
 import { GuildNSFWLevel } from "./nsfw_level.ts";
 import { StageInstance } from "../stage_instance/stage_instance.ts";
 import { Sticker } from "../stickers/mod.ts";
@@ -104,7 +103,7 @@ export interface Guild extends Guild.Partial {
   /** The number of boosts this guild has. */
   premium_subscription_count?: number;
   /** The preferred locale of a Community guild; used in server discovery and notices from Discord - defaults to `en-US`. */
-  preferred_locale: UserLocale;
+  preferred_locale: Locale;
   /** The ID of the channel where admins and moderators of Community guilds receive notices from Discord. */
   public_updates_channel_id: Nullable<Snowflake>;
   /** The maximum amount of users in a video channel. */

@@ -1,4 +1,4 @@
-import { Image, Snowflake } from "../types/mod.ts";
+import { Image, Locale, Snowflake } from "../types/mod.ts";
 import { Nullable } from "../_internals/utils.ts";
 import { Guild } from "../guilds/mod.ts";
 import { UserFlags } from "./flags.ts";
@@ -7,7 +7,6 @@ import { Channel } from "../channels/channel.ts";
 import { OAuth2Scopes } from "../OAuth2/mod.ts";
 import { Permissions } from "../permissions/mod.ts";
 import { UserDiscriminator } from "./discriminator.ts";
-import { UserLocale } from "./locale.ts";
 
 /**
  * Users in Discord are generally considered the base entity.
@@ -24,7 +23,7 @@ export interface User extends User.Partial {
   mfa_enabled?: boolean;
   banner?: Nullable<string>;
   accent_color?: Nullable<number>;
-  locale?: UserLocale;
+  locale?: Locale;
   verified?: boolean;
   email?: Nullable<string>;
   premium_type?: UserPremiumType;
