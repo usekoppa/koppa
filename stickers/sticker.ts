@@ -1,6 +1,7 @@
 import { Snowflake } from "../types/snowflake.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
 import { User } from "../users/mod.ts";
+import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
 
 export interface Sticker extends Sticker.Item {
   pack_id?: Snowflake;
@@ -116,13 +117,8 @@ export namespace Sticker {
           return `/guilds/${guildID}/stickers`;
         }
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
 
         export interface Form {
           name: string;
@@ -157,13 +153,8 @@ export namespace Sticker {
 
         export const Route = _GuildRoutes;
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
 
         export interface Body {
           name: string;
@@ -186,13 +177,8 @@ export namespace Sticker {
 
         export const Route = _GuildRoutes;
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
       }
     }
 

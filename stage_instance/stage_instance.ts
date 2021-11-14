@@ -1,8 +1,9 @@
 import { Snowflake } from "../types/snowflake.ts";
+import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
 
 /**
  * A Stage Instance holds information about a live stage.
- * 
+ *
  * https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure
  */
 export interface StageInstance {
@@ -22,7 +23,7 @@ export interface StageInstance {
 
 /**
  * The Stage Instance Resource.
- * 
+ *
  * https://discord.com/developers/docs/resources/stage-instance
  */
 export namespace StageInstance {
@@ -55,7 +56,7 @@ export namespace StageInstance {
        * Requires the user to be a moderator of the Stage channel.
        *
        * This endpoint supports the `X-Audit-Log-Reason` header.
-       * 
+       *
        * https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance
        */
       export namespace ModifyStageInstance {
@@ -64,13 +65,8 @@ export namespace StageInstance {
 
         export const Route = _StageInstanceRoute;
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
 
         export interface Body {
           /** The topic of the Stage instance (1-120 characters). */
@@ -87,7 +83,7 @@ export namespace StageInstance {
       /**
        * Create Stage Instance
        * POST `/stage-instances`
-       * 
+       *
        * Creates a new Stage instance associated to a Stage channel.
        * Requires the user to be a moderator of the Stage channel.
        * This endpoint supports the X-Audit-Log-Reason header.
@@ -96,13 +92,8 @@ export namespace StageInstance {
         export type Route = `/stage-instances`;
         export const Route: Route = `/stage-instances`;
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
 
         export interface Body {
           /** The ID of the Stage channel. */
@@ -124,13 +115,8 @@ export namespace StageInstance {
 
         export const Route = _StageInstanceRoute;
 
-        export interface Headers {
-          "X-Audit-Log-Reason"?: string;
-        }
-
-        export function Headers(reason?: string) {
-          if (reason) return { "X-Audit-Log-Reason": reason } as Headers;
-        }
+        export type Headers = AuditLogReasonHeaders;
+        export const Headers = AuditLogReasonHeaders;
       }
     }
 
