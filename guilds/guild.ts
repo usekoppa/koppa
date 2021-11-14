@@ -7,7 +7,8 @@ import { Nullable } from "../_internals/utils.ts";
  * https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */
 export interface Guild extends Guild.Partial {
-  icon_hash?: Nullable<string>;
+  /** Icon hash if the guild object is a snapshot in a template. */
+  // icon_hash?: Nullable<string>;
   /** The splash image (hash). */
   splash: Nullable<string>;
   /** Discovery splash image (hash). (Only present for guilds with the `DISCOVERABLE` feature enabled). */
@@ -38,9 +39,5 @@ export namespace Guild {
   export namespace REST {
     export namespace GET {
     }
-  }
-
-  export namespace WS {
-    export namespace GuildCreate {}
   }
 }

@@ -7,6 +7,7 @@ import { Channel } from "../channels/channel.ts";
 import { OAuth2Scopes } from "../OAuth2/mod.ts";
 import { Permissions } from "../permissions/mod.ts";
 import { UserDiscriminator } from "./discriminator.ts";
+import { UserLocale } from "./locale.ts";
 
 /**
  * Users in Discord are generally considered the base entity.
@@ -23,7 +24,7 @@ export interface User extends User.Partial {
   mfa_enabled?: boolean;
   banner?: Nullable<string>;
   accent_color?: Nullable<number>;
-  locale?: string;
+  locale?: UserLocale;
   verified?: boolean;
   email?: Nullable<string>;
   premium_type?: UserPremiumType;
