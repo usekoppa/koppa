@@ -14,6 +14,7 @@ import { UserLocale } from "../users/mod.ts";
 import { GuildNSFWLevel } from "./nsfw_level.ts";
 import { StageInstance } from "../stage_instance/stage_instance.ts";
 import { Sticker } from "../stickers/mod.ts";
+import { GuildWelcomeScreen } from "./welcome_screen/mod.ts";
 
 /**
  * A guild object.
@@ -21,6 +22,13 @@ import { Sticker } from "../stickers/mod.ts";
  * https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */
 export interface Guild extends Guild.Partial {
+  /**
+   * The voice region ID.
+   *
+   * @deprecated
+   * This field is deprecated and is replaced by `channel.rtc_region`.
+   */
+  region?: Nullable<string>;
   /** Icon hash if the guild object is a snapshot in a template. */
   icon_hash?: Nullable<string>;
   /** The splash image (hash). */
@@ -106,7 +114,7 @@ export interface Guild extends Guild.Partial {
   /** Approximate number of non-offline members in this guild - returned from the GET `/guilds/<id>` endpoint when `with_counts` is `true`. */
   approximate_presence_count?: number;
   /** The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. */
-  welcome_screen?: $TODO;
+  welcome_screen?: GuildWelcomeScreen;
   /** The guild's NSFW level. */
   nsfw_level: GuildNSFWLevel;
   /** The Stage Instances in the guild. */
@@ -130,10 +138,39 @@ export namespace Guild {
   export interface Partial {
     /** The ID of the guild. */
     id: Snowflake;
-    /** The name of the guild. */
+    /** The name of the guild (2-100 characters). */
     name: string;
     /** The icon (hash) of the guild. */
     icon: Nullable<string>;
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
+  export type Preview = Required<
+    Pick<
+      Guild,
+      | "id"
+      | "name"
+      | "icon"
+      | "splash"
+      | "discovery_splash"
+      | "emojis"
+      | "features"
+      | "approximate_member_count"
+      | "approximate_presence_count"
+      | "description"
+    >
+  >;
+
+  /**
+   * A partial guild object.
+   * Represents an Offline Guild, or a Guild whose information has not been
+   * provided through `GUILD_CREATE` events during the Gateway connect.
+   *
+   * https://discord.com/developers/docs/resources/guild#unavailable-guild-object
+   */
+  export interface Unavailable {
+    id: Snowflake;
+    unavailable: true;
   }
 
   export namespace REST {

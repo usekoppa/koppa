@@ -6,7 +6,10 @@ import { ThreadMetadata } from "./metadata.ts";
 import { ThreadType } from "./type.ts";
 import { Permissions as PermissionsNS } from "../../permissions/mod.ts";
 
-export type Thread<Type extends ThreadType = ThreadType.Public> =
+export type Thread<
+  Type extends ThreadType = ThreadType,
+  Archived extends boolean = boolean,
+> =
   & Required<
     Pick<
       Channel,
@@ -26,11 +29,56 @@ export type Thread<Type extends ThreadType = ThreadType.Public> =
   & { thread_metadata: ThreadMetadata<Type> };
 
 export namespace Thread {
-  export type Public = Thread<ThreadType.Public>;
-  export type Private = Thread<ThreadType.Private>;
+  export type Public<Archived extends boolean = boolean> = Thread<
+    ThreadType.Public,
+    Archived
+  >;
+
+  export type Private<Archived extends boolean = boolean> = Thread<
+    ThreadType.Private,
+    Archived
+  >;
+
+  export type News<Archived extends boolean = boolean> = Thread<
+    ThreadType.News,
+    Archived
+  >;
 
   export namespace REST {
     export namespace GET {
+      /**
+       * List Active Threads
+       * GET `/channels/{channel.id}/threads/active
+       *
+       * Returns all active threads in the channel, including public and private threads.
+       * Threads are ordered by their ID, in descending order.
+       *
+       * @deprecated
+       * This route is deprecated and will be removed in v10. It is replaced by List Active Guild Threads.
+       *
+       * https://discord.com/developers/docs/resources/channel#list-active-threads
+       */
+      export namespace ListActiveThreads {
+        export type Route<ChannelID extends Snowflake = Snowflake> =
+          `/channels/${ChannelID}/threads/active`;
+
+        export function Route<ChannelID extends Snowflake>(
+          channelID: ChannelID,
+        ): Route<ChannelID> {
+          return `/channels/${channelID}/threads/active`;
+        }
+
+        /** https://discord.com/developers/docs/resources/channel#list-active-threads-response-body */
+        export interface Response {
+          /**	The active threads. */
+          threads: Thread<ThreadType, false>[];
+          /**	A thread member object for each returned thread the current user has joined. */
+          members: ThreadMember[];
+          /** Whether there are potentially additional threads that could be returned on a subsequent call. */
+          has_more: boolean;
+        }
+      }
+
       /**
        * List Guild Active Threads
        * GET `/guilds/{guild.id}/threads/active`
@@ -53,9 +101,10 @@ export namespace Thread {
           return `/guilds/${guildID}/threads/active`;
         }
 
+        /** https://discord.com/developers/docs/resources/guild#list-active-threads-response-body */
         export interface Response {
           /**	The active threads. */
-          threads: Thread[];
+          threads: Thread<ThreadType, false>[];
           /**	A thread member object for each returned thread the current user has joined. */
           members: ThreadMember[];
         }
@@ -84,6 +133,7 @@ export namespace Thread {
           return `/channels/${channelID}/threads/archived/public`;
         }
 
+        /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads-query-string-params */
         export interface QueryString {
           /* Returns threads before this (ISO8601) timestamp. */
           before?: ISO8601;
@@ -97,9 +147,10 @@ export namespace Thread {
 
         export type Permissions = PermissionsNS.Raw;
 
+        /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads-response-body */
         export interface Response {
           /** The public, archived threads. */
-          threads: Thread[];
+          threads: Public<true>[];
           /** A thread member object for each returned thread the current user has joined. */
           members: ThreadMember[];
           /** Whether there are potentially additional threads that could be returned on a subsequent call. */
@@ -128,6 +179,7 @@ export namespace Thread {
           return `/channels/${channelID}/threads/archived/private`;
         }
 
+        /** https://discord.com/developers/docs/resources/channel#list-private-archived-threads-query-string-params */
         export interface QueryString {
           /* Returns threads before this (ISO8601) timestamp. */
           before?: ISO8601;
@@ -141,9 +193,10 @@ export namespace Thread {
 
         export type Permissions = PermissionsNS.Raw;
 
+        /** https://discord.com/developers/docs/resources/channel#list-private-archived-threads-response-body */
         export interface Response {
           /** The private, archived threads. */
-          threads: Thread[];
+          threads: Private<true>[];
           /**	A thread member object for each returned thread the current user has joined. */
           members: ThreadMember[];
           /** Whether there are potentially additional threads that could be returned on a subsequent call. */
@@ -172,6 +225,7 @@ export namespace Thread {
           return `/channels/${channelID}/users/@me/threads/archived/private`;
         }
 
+        /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads-query-string-params */
         export interface QueryString {
           /* Returns threads before this ID. */
           before?: Snowflake;
@@ -181,6 +235,16 @@ export namespace Thread {
 
         export function QueryString(query: QueryString) {
           return encodeQueryString(query);
+        }
+
+        /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads-response-body */
+        export interface Response {
+          /** The private, archived threads the current user has joined. */
+          threads: Private<true>[];
+          /** A thread member object for each returned thread the current user has joined. */
+          members: ThreadMember[];
+          /** Whether there are potentially additional threads that could be returned on a subsequent call. */
+          has_more: boolean;
         }
       }
     }

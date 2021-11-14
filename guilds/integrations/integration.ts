@@ -1,9 +1,9 @@
-import { Application } from "../../application/mod.ts";
-import { User } from "../../users/mod.ts";
+import type { User } from "../../users/mod.ts";
 import type { ISO8601, Snowflake } from "../../types/mod.ts";
 import type { GuildIntegrationAccount } from "./account.ts";
 import type { GuildIntegrationExpireBehaviour } from "./expiry_behaviour.ts";
 import type { GuildIntegrationType } from "./type.ts";
+import type { GuildIntegrationApplication } from "./application.ts";
 
 /**
  * An integration for a guild.
@@ -31,7 +31,7 @@ export interface GuildIntegration extends GuildIntegration.Partial {
   /** Has the integration been revoked. */
   revoked?: boolean;
   /** The bot/OAuth2 application for discord integrations. */
-  application?: Application;
+  application?: GuildIntegrationApplication;
 }
 
 export namespace GuildIntegration {

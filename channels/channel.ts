@@ -7,6 +7,11 @@ import { ThreadMember, ThreadMetadata } from "./threads/mod.ts";
 import { VideoQualityMode } from "./video_quality_mode.ts";
 import { Permissions } from "../permissions/mod.ts";
 
+/**
+ * Represents a guild or DM channel within Discord.
+ *
+ * https://discord.com/developers/docs/resources/channel#channel-object
+ */
 export interface Channel extends Channel.Partial {
   guild_id?: Snowflake;
   position?: number;
@@ -34,6 +39,7 @@ export interface Channel extends Channel.Partial {
   permissions?: Permissions.Raw;
 }
 
+/** https://discord.com/developers/docs/resources/channel#channels-resource */
 export namespace Channel {
   export interface Partial<Type extends ChannelType = ChannelType> {
     id: Snowflake;
@@ -45,5 +51,6 @@ export namespace Channel {
     export type GroupDM = $TODO;
   }
 
-  export namespace REST {}
+  export namespace REST {
+  }
 }
