@@ -1,5 +1,6 @@
 import { Snowflake } from "../types/snowflake.ts";
 import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
+import { StageInstancePrivacyLevel } from "./privacy_level.ts";
 
 /**
  * A Stage Instance holds information about a live stage.
@@ -16,7 +17,7 @@ export interface StageInstance {
   /** The topic (1-120 characters) of the Stage instance. */
   topic: string;
   /** The privacy level of the Stage instance. */
-  privacy_level: StageInstance.PrivacyLevel;
+  privacy_level: StageInstancePrivacyLevel;
   /** Whether or not Stage Discovery is disabled. */
   discoverable_disabled: boolean;
 }
@@ -27,14 +28,6 @@ export interface StageInstance {
  * https://discord.com/developers/docs/resources/stage-instance
  */
 export namespace StageInstance {
-  /** The visibility of the Stage to the public. */
-  export const enum PrivacyLevel {
-    /** The Stage instance is visible publicly, such as on Stage Discovery. */
-    Public = 1,
-    /** The Stage instance is visible to guild members only. */
-    GuildOnly = 2,
-  }
-
   export namespace REST {
     export namespace GET {
       export namespace GetStageInstance {
@@ -72,7 +65,7 @@ export namespace StageInstance {
           /** The topic of the Stage instance (1-120 characters). */
           topic?: string;
           /** The privacy level of the Stage instance. */
-          privacy_level?: PrivacyLevel;
+          privacy_level?: StageInstancePrivacyLevel;
         }
 
         export type Response = StageInstance;
@@ -101,7 +94,7 @@ export namespace StageInstance {
           /** The topic of the Stage instance (1-120 characters). */
           topic: string;
           /** The privacy level of the Stage instance (default `GUILD_ONLY`). */
-          privacy_level?: PrivacyLevel;
+          privacy_level?: StageInstancePrivacyLevel;
         }
 
         export type Response = StageInstance;

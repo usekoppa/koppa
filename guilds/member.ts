@@ -1,7 +1,7 @@
-import { SerialisedPermissions } from "../permissions/mod.ts";
-import { ISO8601, Snowflake } from "../types/mod.ts";
-import { User } from "../users/mod.ts";
-import { Nullable } from "../_internals/utils.ts";
+import type { SerialisedPermissions } from "../permissions/serialised.ts";
+import type { ISO8601, Snowflake } from "../types/mod.ts";
+import type { User } from "../users/user.ts";
+import type { Nullable } from "../_internals/utils.ts";
 
 /**
  * Guild Member Object

@@ -1,10 +1,10 @@
 import { encodeQueryString } from "../../_internals/encode_query_string.ts";
-import type { Snowflake } from "./../../types/mod.ts";
-import type { GuildIntegration } from "../integrations/mod.ts";
+import type { Snowflake } from "./../../types/snowflake.ts";
+import type { GuildIntegration } from "../integrations/integration.ts";
 import type { AuditLogEntry } from "./entry.ts";
-import type { Webhook } from "../../webhooks/mod.ts";
+import type { Webhook } from "../../webhooks/webhook.ts";
 import type { User } from "../../users/user.ts";
-import type { Thread } from "../../channels/threads/mod.ts";
+import type { Thread } from "../../channels/threads/thread.ts";
 
 /**
  * An audit log object associated with a guild.

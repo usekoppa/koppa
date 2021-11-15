@@ -1,5 +1,5 @@
-import { Snowflake } from "../../types/mod.ts";
-import { Nullable } from "../../_internals/utils.ts";
+import type { Snowflake } from "../../types/snowflake.ts";
+import type { Nullable } from "../../_internals/utils.ts";
 
 export interface GuildWelcomeScreenChannel {
   /** The ID of the channel. */

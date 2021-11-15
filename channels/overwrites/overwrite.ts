@@ -1,5 +1,5 @@
 import { Snowflake } from "../../types/snowflake.ts";
-import { SerialisedPermissions } from "../../permissions/mod.ts";
+import { SerialisedPermissions } from "../../permissions/serialised.ts";
 
 import { PermissionOverwriteType } from "./type.ts";
 

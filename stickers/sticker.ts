@@ -1,16 +1,20 @@
-import { Snowflake } from "../types/snowflake.ts";
-import { Nullable } from "../_internals/utils.ts";
-import { User } from "../users/mod.ts";
+import type { Snowflake } from "../types/snowflake.ts";
+import type { Nullable } from "../_internals/utils.ts";
+import type { User } from "../users/user.ts";
 import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
-import { Permission } from "../permissions/mod.ts";
+import { Permission } from "../permissions/permission.ts";
+import type { StickerFormat } from "./format.ts";
+import type { StickerType } from "./type.ts";
+import type { StickerPack } from "./pack.ts";
 
-export interface Sticker extends Sticker.Item {
+export interface Sticker<Type extends StickerType = StickerType>
+  extends Sticker.Item {
   pack_id?: Snowflake;
   description: Nullable<string>;
   tags: string;
   asset: string;
-  type: Sticker.Type;
-  format_type: Sticker.Format;
+  type: StickerType;
+  format_type: StickerFormat;
   available?: boolean;
   guild_id?: Snowflake;
   user?: User.Partial;
@@ -18,36 +22,14 @@ export interface Sticker extends Sticker.Item {
 }
 
 export namespace Sticker {
-  export const enum Type {
-    Standard = 1,
-    Guild = 2,
-  }
-
-  export const enum Format {
-    PNG = 1,
-    APNG = 2,
-    Lottie = 3,
-  }
-
-  export type GuildSticker =
-    & Omit<Sticker, "sort_value" | "pack_id">
-    & Required<Pick<Sticker, "guild_id" | "available">>
-    & { type: Type.Guild };
+  export type Guild =
+    & Omit<Sticker<StickerType.Guild>, "sort_value" | "pack_id">
+    & Required<Pick<Sticker<StickerType.Guild>, "guild_id" | "available">>;
 
   export interface Item {
     id: Snowflake;
     name: string;
-    format_type: Format;
-  }
-
-  export interface Pack {
-    id: Snowflake;
-    stickers: Sticker[];
-    name: string;
-    sku_id: Snowflake;
-    cover_sticker_id?: Snowflake;
-    description: string;
-    banner_asset_id: Snowflake;
+    format_type: StickerFormat;
   }
 
   export namespace REST {
@@ -69,7 +51,7 @@ export namespace Sticker {
         export const Route: Route = "/sticker-packs";
 
         export interface Response {
-          sticker_packs: Pack[];
+          sticker_packs: StickerPack[];
         }
       }
 
@@ -86,7 +68,7 @@ export namespace Sticker {
         export type Permissions = [Permission.ManageEmojisAndStickers];
         export const Permissions = [Permission.ManageEmojisAndStickers];
 
-        export type Response = GuildSticker[];
+        export type Response = Guild[];
       }
 
       export namespace GetGuildSticker {
@@ -105,7 +87,7 @@ export namespace Sticker {
         export type Permissions = [Permission.ManageEmojisAndStickers];
         export const Permissions = [Permission.ManageEmojisAndStickers];
 
-        export type Response = GuildSticker;
+        export type Response = Guild;
       }
     }
 
@@ -143,8 +125,8 @@ export namespace Sticker {
         export const Permissions = [Permission.ManageEmojisAndStickers];
 
         export type Response =
-          & GuildSticker
-          & Required<Pick<GuildSticker, "user">>;
+          & Guild
+          & Required<Pick<Guild, "user">>;
       }
     }
 
@@ -169,7 +151,7 @@ export namespace Sticker {
         export type Permissions = [Permission.ManageEmojisAndStickers];
         export const Permissions = [Permission.ManageEmojisAndStickers];
 
-        export type Response = GuildSticker;
+        export type Response = Guild;
       }
     }
 

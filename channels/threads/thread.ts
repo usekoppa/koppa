@@ -12,7 +12,9 @@ export type Thread<
 > =
   & Required<
     Pick<
-      Channel,
+      Channel<Type>,
+      | "id"
+      | "type"
       | "name"
       | "last_message_id"
       | "last_pin_timestamp"
@@ -25,8 +27,7 @@ export type Thread<
       | "member_count"
     >
   >
-  & Channel.Partial<Type>
-  & { thread_metadata: ThreadMetadata<Type> };
+  & { thread_metadata: ThreadMetadata<Type, Archived> };
 
 export namespace Thread {
   export type Public<Archived extends boolean = boolean> = Thread<

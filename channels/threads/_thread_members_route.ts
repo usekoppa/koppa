@@ -1,4 +1,4 @@
-import { Snowflake } from "../../types/mod.ts";
+import { Snowflake } from "../../types/snowflake.ts";
 
 export type _ThreadMembersRoute<
   ChannelID extends Snowflake = Snowflake,

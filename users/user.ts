@@ -123,7 +123,7 @@ export namespace User {
           recipient_id: Snowflake;
         }
 
-        export type Response = Channel.DM.Channel;
+        export type Response = Channel.DM;
       }
 
       export namespace CreateGroupDM {
@@ -147,7 +147,7 @@ export namespace User {
           };
         }
 
-        export type Response = Channel.DM.GroupDM;
+        export type Response = Channel.DM.Group;
       }
     }
 

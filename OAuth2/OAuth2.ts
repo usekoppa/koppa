@@ -1,7 +1,7 @@
-import { Application } from "../application/mod.ts";
-import { ISO8601 } from "../types/ISO8601.ts";
-import { User } from "../users/mod.ts";
-import { OAuth2Scopes } from "./scopes.ts";
+import type { Application } from "../application/application.ts";
+import type { ISO8601 } from "../types/ISO8601.ts";
+import type { User } from "../users/user.ts";
+import type { OAuth2Scopes } from "./scopes.ts";
 
 /**
  * OAuth2 Resource

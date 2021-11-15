@@ -1,19 +1,19 @@
-import { ISO8601, Locale, Snowflake } from "../types/mod.ts";
-import { $TODO, Nullable } from "../_internals/utils.ts";
-import { SerialisedPermissions } from "../permissions/mod.ts";
-import { GuildVerificationLevel } from "./verification_level.ts";
-import { GuildDefaultMessageNotificationLevel } from "./default_message_notification_level.ts";
-import { GuildExplicitContentFilterLevel } from "./explicit_content_filter_level.ts";
-import { Role } from "./roles/mod.ts";
-import { GuildFeature } from "./feature.ts";
-import { SystemChannelFlags } from "./system_channel_flags.ts";
-import { Channel, Thread } from "../channels/mod.ts";
-import { GuildPremiumTier } from "./premium_tier.ts";
-import { GuildMFALevel } from "./mfa_level.ts";
-import { GuildNSFWLevel } from "./nsfw_level.ts";
-import { StageInstance } from "../stage_instance/stage_instance.ts";
-import { Sticker } from "../stickers/mod.ts";
-import { GuildWelcomeScreen } from "./welcome_screen/mod.ts";
+import type { ISO8601, Locale, Snowflake } from "../types/mod.ts";
+import type { $TODO, Nullable } from "../_internals/utils.ts";
+import type { SerialisedPermissions } from "../permissions/serialised.ts";
+import type { GuildVerificationLevel } from "./verification_level.ts";
+import type { GuildDefaultMessageNotificationLevel } from "./default_message_notification_level.ts";
+import type { GuildExplicitContentFilterLevel } from "./explicit_content_filter_level.ts";
+import type { Role } from "./roles/role.ts";
+import type { GuildFeature } from "./feature.ts";
+import type { SystemChannelFlags } from "./system_channel_flags.ts";
+import type { Channel, Thread } from "../channels/mod.ts";
+import type { GuildPremiumTier } from "./premium_tier.ts";
+import type { GuildMFALevel } from "./mfa_level.ts";
+import type { GuildNSFWLevel } from "./nsfw_level.ts";
+import type { StageInstance } from "../stage_instance/stage_instance.ts";
+import type { Sticker } from "../stickers/sticker.ts";
+import type { GuildWelcomeScreen } from "./welcome_screen/welcome_screen.ts";
 
 /**
  * A guild object.
@@ -119,7 +119,7 @@ export interface Guild extends Guild.Partial {
   /** The Stage Instances in the guild. */
   stage_instances?: StageInstance[];
   /** The guild's custom stickers. */
-  stickers?: Sticker.GuildSticker[];
+  stickers?: Sticker.Guild[];
 }
 
 /**
@@ -174,6 +174,21 @@ export namespace Guild {
 
   export namespace REST {
     export namespace GET {
+      export namespace GetGuild {}
+
+      export namespace GetGuildPreview {}
+    }
+
+    export namespace PATCH {
+      export namespace ModifyGuild {}
+    }
+
+    export namespace POST {
+      export namespace CreateGuild {}
+    }
+
+    export namespace DELETE {
+      export namespace DeleteGuild {}
     }
   }
 }

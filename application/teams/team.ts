@@ -1,6 +1,6 @@
-import { Snowflake } from "../../types/mod.ts";
+import { Snowflake } from "../../types/snowflake.ts";
 import { Nullable } from "../../_internals/utils.ts";
-import { TeamMember } from "./members/mod.ts";
+import { TeamMember } from "./members/member.ts";
 
 export interface Team {
   icon?: Nullable<string>;

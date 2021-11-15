@@ -1,5 +1,5 @@
-import { Nullable } from "../../_internals/utils.ts";
-import { GuildWelcomeScreenChannel } from "./channel.ts";
+import type { Nullable } from "../../_internals/utils.ts";
+import type { GuildWelcomeScreenChannel } from "./channel.ts";
 
 export interface GuildWelcomeScreen {
   description: Nullable<string>;
