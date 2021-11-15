@@ -22,7 +22,7 @@ There's definitely more, I just need to make things look achievable for now thou
     - [ ] News
     - [ ] Rules
     - [ ] Feed
-  - Endpoints
+  - [ ] Endpoints
 - [ ] Guilds
   - [ ] Roles
   - [ ] Endpoints
