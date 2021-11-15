@@ -3,11 +3,11 @@ import { Snowflake } from "../../../types/snowflake.ts";
 import { GuildDefaultMessageNotificationLevel } from "../../default_message_notification_level.ts";
 import { GuildExplicitContentFilterLevel } from "../../explicit_content_filter_level.ts";
 import { GuildIntegrationExpireBehaviour } from "../../integrations/expiry_behaviour.ts";
-import { GuildMFARequirement } from "../../mfa_requirement.ts";
+import { GuildMFALevel } from "../../mfa_level.ts";
 import { GuildVerificationLevel } from "../../verification_level.ts";
 import { Sticker as StickerNS } from "../../../stickers/mod.ts";
-import { $TODO } from "../../../_internals/utils.ts";
 import { Role as RoleNS } from "../../roles/mod.ts";
+import { SerialisedPermissions } from "../../../permissions/mod.ts";
 
 /** The type of the aspect in question that changed with this entry. */
 export type AuditLogChangeKey =
@@ -90,7 +90,7 @@ export namespace AuditLogChangeKey {
     export const Icon = "icon_hash";
 
     /** The two-factor/multi-factor authentication requirement was changed. */
-    export type MFALevel = GuildMFARequirement;
+    export type MFALevel = GuildMFALevel;
     export const MFALevel = "mfa_level";
 
     /** The owner of the guild was changed. */
@@ -404,7 +404,7 @@ export namespace AuditLogChangeKey {
     export const Icon = "icon_hash";
 
     /** The permissions changed for a role. */
-    export type Permissions = $TODO<string>;
+    export type Permissions = SerialisedPermissions;
     export const Permissions = "permissions";
 
     /** The unicode emoji was changed for a role. */

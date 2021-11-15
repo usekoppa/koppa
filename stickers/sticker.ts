@@ -1,7 +1,8 @@
 import { Snowflake } from "../types/snowflake.ts";
-import { $TODO, Nullable } from "../_internals/utils.ts";
+import { Nullable } from "../_internals/utils.ts";
 import { User } from "../users/mod.ts";
 import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
+import { Permission } from "../permissions/mod.ts";
 
 export interface Sticker extends Sticker.Item {
   pack_id?: Snowflake;
@@ -82,7 +83,8 @@ export namespace Sticker {
           return `/guilds/${guildID}/stickers`;
         }
 
-        export type Permissions = $TODO<string>;
+        export type Permissions = [Permission.ManageEmojisAndStickers];
+        export const Permissions = [Permission.ManageEmojisAndStickers];
 
         export type Response = GuildSticker[];
       }
@@ -100,7 +102,8 @@ export namespace Sticker {
           return `/guilds/${guildID}/stickers/${stickerID}`;
         }
 
-        export type Permissions = $TODO<string>;
+        export type Permissions = [Permission.ManageEmojisAndStickers];
+        export const Permissions = [Permission.ManageEmojisAndStickers];
 
         export type Response = GuildSticker;
       }
@@ -136,7 +139,8 @@ export namespace Sticker {
           return form;
         }
 
-        export type Permissions = $TODO<string>;
+        export type Permissions = [Permission.ManageEmojisAndStickers];
+        export const Permissions = [Permission.ManageEmojisAndStickers];
 
         export type Response =
           & GuildSticker
@@ -162,7 +166,8 @@ export namespace Sticker {
           tags: string;
         }
 
-        export type Permissions = $TODO<string>;
+        export type Permissions = [Permission.ManageEmojisAndStickers];
+        export const Permissions = [Permission.ManageEmojisAndStickers];
 
         export type Response = GuildSticker;
       }

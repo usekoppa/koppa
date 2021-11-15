@@ -4,7 +4,7 @@ import { Channel } from "../channel.ts";
 import { ThreadMember } from "./member.ts";
 import { ThreadMetadata } from "./metadata.ts";
 import { ThreadType } from "./type.ts";
-import { Permissions as PermissionsNS } from "../../permissions/mod.ts";
+import { Permission } from "../../permissions/mod.ts";
 
 export type Thread<
   Type extends ThreadType = ThreadType,
@@ -145,7 +145,8 @@ export namespace Thread {
           return encodeQueryString(query);
         }
 
-        export type Permissions = PermissionsNS.Raw;
+        export type Permissions = [Permission.ReadMessageHistory];
+        export const Permissions = [Permission.ReadMessageHistory];
 
         /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads-response-body */
         export interface Response {
@@ -191,7 +192,15 @@ export namespace Thread {
           return encodeQueryString(query);
         }
 
-        export type Permissions = PermissionsNS.Raw;
+        export type Permissions = [
+          Permission.ReadMessageHistory,
+          Permission.ManageThreads,
+        ];
+
+        export const Permissions = [
+          Permission.ReadMessageHistory,
+          Permission.ManageThreads,
+        ];
 
         /** https://discord.com/developers/docs/resources/channel#list-private-archived-threads-response-body */
         export interface Response {
