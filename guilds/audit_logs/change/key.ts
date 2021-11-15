@@ -1,13 +1,13 @@
-import { PermissionOverwrite } from "../../../channels/overwrites/overwrite.ts";
-import { Snowflake } from "../../../types/snowflake.ts";
-import { GuildDefaultMessageNotificationLevel } from "../../default_message_notification_level.ts";
-import { GuildExplicitContentFilterLevel } from "../../explicit_content_filter_level.ts";
-import { GuildIntegrationExpireBehaviour } from "../../integrations/expiry_behaviour.ts";
-import { GuildMFALevel } from "../../mfa_level.ts";
-import { GuildVerificationLevel } from "../../verification_level.ts";
-import { Sticker as StickerNS } from "../../../stickers/mod.ts";
-import { Role as RoleNS } from "../../roles/mod.ts";
-import { SerialisedPermissions } from "../../../permissions/mod.ts";
+import type { PermissionOverwrite } from "../../../channels/overwrites/overwrite.ts";
+import type { Snowflake } from "../../../types/snowflake.ts";
+import type { GuildDefaultMessageNotificationLevel } from "../../default_message_notification_level.ts";
+import type { GuildExplicitContentFilterLevel } from "../../explicit_content_filter_level.ts";
+import type { GuildIntegrationExpireBehaviour } from "../../integrations/expiry_behaviour.ts";
+import type { GuildMFALevel } from "../../mfa_level.ts";
+import type { GuildVerificationLevel } from "../../verification_level.ts";
+import type { StickerFormat } from "../../../stickers/format.ts";
+import type { Role as RoleNS } from "../../roles/role.ts";
+import type { SerialisedPermissions } from "../../../permissions/serialised.ts";
 
 /** The type of the aspect in question that changed with this entry. */
 export type AuditLogChangeKey =
@@ -28,27 +28,27 @@ export namespace AuditLogChangeKey {
 
   /** The guild's settings were been modified/created/deleted. */
   export type Guild =
-    | typeof AuditLogChangeKey.Guild.AFK.Channel
-    | typeof AuditLogChangeKey.Guild.AFK.Timeout
-    | typeof AuditLogChangeKey.Guild.Banner
-    | typeof AuditLogChangeKey.Guild.DefaultMessageNotificationsLevel
-    | typeof AuditLogChangeKey.Guild.DiscoverySplash
-    | typeof AuditLogChangeKey.Guild.ExplicitContentFilter
-    | typeof AuditLogChangeKey.Guild.Icon
-    | typeof AuditLogChangeKey.Guild.MFALevel
-    | typeof AuditLogChangeKey.Guild.Name
-    | typeof AuditLogChangeKey.Guild.Owner
-    | typeof AuditLogChangeKey.Guild.PreferredLocale
-    | typeof AuditLogChangeKey.Guild.PruneKickPeriod
-    | typeof AuditLogChangeKey.Guild.PublicUpdatesChannel
-    | typeof AuditLogChangeKey.Guild.Region
-    | typeof AuditLogChangeKey.Guild.RulesChannel
-    | typeof AuditLogChangeKey.Guild.Splash
-    | typeof AuditLogChangeKey.Guild.SystemChannel
-    | typeof AuditLogChangeKey.Guild.VanityURLCode
-    | typeof AuditLogChangeKey.Guild.VerificationLevel
-    | typeof AuditLogChangeKey.Guild.Widget
-    | typeof AuditLogChangeKey.Guild.WidgetChannel;
+    | typeof Guild.AFK.Channel
+    | typeof Guild.AFK.Timeout
+    | typeof Guild.Banner
+    | typeof Guild.DefaultMessageNotificationsLevel
+    | typeof Guild.DiscoverySplash
+    | typeof Guild.ExplicitContentFilter
+    | typeof Guild.Icon
+    | typeof Guild.MFALevel
+    | typeof Guild.Name
+    | typeof Guild.Owner
+    | typeof Guild.PreferredLocale
+    | typeof Guild.PruneKickPeriod
+    | typeof Guild.PublicUpdatesChannel
+    | typeof Guild.Region
+    | typeof Guild.RulesChannel
+    | typeof Guild.Splash
+    | typeof Guild.SystemChannel
+    | typeof Guild.VanityURLCode
+    | typeof Guild.VerificationLevel
+    | typeof Guild.Widget
+    | typeof Guild.WidgetChannel;
 
   export namespace Guild {
     /** The name of a guild was changed. */
@@ -316,7 +316,7 @@ export namespace AuditLogChangeKey {
     export const Description = "description";
 
     /** The format type of a sticker changed. */
-    export type Format = StickerNS.Format;
+    export type Format = StickerFormat;
     export const Format = "format_type";
 
     /** The guild the sticker is in was changed. */
