@@ -5,7 +5,7 @@ import { UserFlags } from "./flags.ts";
 import { UserPremiumType } from "./premium_type.ts";
 import { Channel } from "../channels/channel.ts";
 import { OAuth2Scopes } from "../OAuth2/mod.ts";
-import { Permissions } from "../permissions/mod.ts";
+import { SerialisedPermissions } from "../permissions/mod.ts";
 import { UserDiscriminator } from "./discriminator.ts";
 
 /**
@@ -92,7 +92,7 @@ export namespace User {
 
         export interface Response extends Guild.Partial {
           owner: boolean;
-          permissions: Permissions.Raw;
+          permissions: SerialisedPermissions;
         }
       }
     }

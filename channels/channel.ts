@@ -5,7 +5,7 @@ import { ChannelType } from "./channel_type.ts";
 import { PermissionOverwrite } from "./overwrites/mod.ts";
 import { ThreadMember, ThreadMetadata } from "./threads/mod.ts";
 import { VideoQualityMode } from "./video_quality_mode.ts";
-import { Permissions } from "../permissions/mod.ts";
+import { SerialisedPermissions } from "../permissions/mod.ts";
 
 /**
  * Represents a guild or DM channel within Discord.
@@ -36,7 +36,7 @@ export interface Channel extends Channel.Partial {
   thread_metadata?: ThreadMetadata;
   member?: ThreadMember;
   default_auto_archive_duration?: number;
-  permissions?: Permissions.Raw;
+  permissions?: SerialisedPermissions;
 }
 
 /** https://discord.com/developers/docs/resources/channel#channels-resource */

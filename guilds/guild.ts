@@ -1,6 +1,6 @@
 import { ISO8601, Locale, Snowflake } from "../types/mod.ts";
 import { $TODO, Nullable } from "../_internals/utils.ts";
-import { Permissions } from "../permissions/mod.ts";
+import { SerialisedPermissions } from "../permissions/mod.ts";
 import { GuildVerificationLevel } from "./verification_level.ts";
 import { GuildDefaultMessageNotificationLevel } from "./default_message_notification_level.ts";
 import { GuildExplicitContentFilterLevel } from "./explicit_content_filter_level.ts";
@@ -39,7 +39,7 @@ export interface Guild extends Guild.Partial {
   /** The ID of the user who owns the guild */
   owner_id: Snowflake;
   /** The permissions (excluding overwrites) for the current user. */
-  permissions?: Permissions.Raw;
+  permissions?: SerialisedPermissions;
   /** ID of the AFK channel. */
   afk_channel_id: Nullable<Snowflake>;
   /** AFK timeout in seconds. */
