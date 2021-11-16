@@ -7,7 +7,8 @@ import type { GuildExplicitContentFilterLevel } from "./explicit_content_filter_
 import type { Role } from "./roles/role.ts";
 import type { GuildFeature } from "./feature.ts";
 import type { SystemChannelFlags } from "./system_channel_flags.ts";
-import type { Channel, Thread } from "../channels/mod.ts";
+import type { Channel } from "../channels/channel.ts";
+import type { Thread } from "../threads/thread.ts";
 import type { GuildPremiumTier } from "./premium_tier.ts";
 import type { GuildMFALevel } from "./mfa_level.ts";
 import type { GuildNSFWLevel } from "./nsfw_level.ts";
@@ -177,6 +178,12 @@ export namespace Guild {
       export namespace GetGuild {}
 
       export namespace GetGuildPreview {}
+
+      export namespace GetGuildPruneCount {}
+
+      export namespace GetGuildInvites {}
+
+      export namespace GetGuildVanityURL {}
     }
 
     export namespace PATCH {
@@ -185,6 +192,8 @@ export namespace Guild {
 
     export namespace POST {
       export namespace CreateGuild {}
+
+      export namespace BeginGuildPrune {}
     }
 
     export namespace DELETE {

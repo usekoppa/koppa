@@ -1,4 +1,5 @@
-import { Gateway as GatewayNS } from "./gateway/gateway.ts";
+import { Gateway as GatewayNS } from "../gateway/gateway.ts";
+import { API_VERSION } from "./API_version.ts";
 
 export namespace URLs {
   /**

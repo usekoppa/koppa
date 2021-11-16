@@ -26,3 +26,36 @@ export interface GuildMember {
   /** Total permissions of the member in the channel, including overwrites - returned when in the interaction object. */
   permissions?: SerialisedPermissions;
 }
+
+export namespace GuildMember {
+  export namespace REST {
+    export namespace GET {
+      export namespace GetGuildMember {}
+
+      export namespace ListGuildMembers {}
+
+      export namespace SearchGuildMembers {}
+    }
+
+    export namespace PATCH {
+      export namespace ModifyGuildMember {}
+
+      export namespace ModifyCurrentMember {}
+
+      /** @deprecated */
+      export namespace ModifyCurrentUserNick {}
+    }
+
+    export namespace PUT {
+      export namespace AddGuildMember {}
+
+      export namespace AddGuildMemberRole {}
+    }
+
+    export namespace DELETE {
+      export namespace RemoveGuildMemberRole {}
+
+      export namespace RemoveGuildMember {}
+    }
+  }
+}

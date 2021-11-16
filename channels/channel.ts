@@ -2,8 +2,8 @@ import { ISO8601, Snowflake } from "../types/mod.ts";
 import { Nullable } from "../_internals/utils.ts";
 import { User } from "../users/mod.ts";
 import { ChannelType } from "./channel_type.ts";
-import { PermissionOverwrite } from "./overwrites/mod.ts";
-import { ThreadMember, ThreadMetadata, ThreadType } from "./threads/mod.ts";
+import { PermissionOverwrite } from "../permissions/overwrites/overwrite.ts";
+import { ThreadMember, ThreadMetadata, ThreadType } from "../threads/mod.ts";
 import { VideoQualityMode } from "./video_quality_mode.ts";
 import { SerialisedPermissions } from "../permissions/mod.ts";
 
@@ -24,7 +24,7 @@ export interface Channel<Type extends ChannelType = ChannelType>
   bitrate?: number;
   user_limit?: number;
   rate_limit_per_user?: number;
-  recipients?: Omit<User.Partial, "flags">[];
+  recipients?: User.Partial[];
   icon?: Nullable<string>;
   owner_id?: Snowflake;
   application_id?: Snowflake;
@@ -56,7 +56,7 @@ export namespace Channel {
         "id" | "type" | "last_message_id" | "recipients"
       >
     >
-    & { recipients: [Omit<User.Partial, "flags">] };
+    & { recipients: [User.Partial] };
 
   export namespace DM {
     /** https://discord.com/developers/docs/resources/channel#channel-object-example-group-dm-channel */
@@ -69,6 +69,14 @@ export namespace Channel {
         >
       >;
   }
+
+  export type Guild =
+    | Guild.Category
+    | Guild.News
+    | Guild.Stage
+    | Guild.Store
+    | Guild.Text
+    | Guild.Voice;
 
   export namespace Guild {
     /** https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel */
@@ -106,7 +114,7 @@ export namespace Channel {
       type: ChannelType.GuildStageVoice;
     };
 
-    export type _GuildChannelTypes =
+    type _GuildChannelTypes =
       | ChannelType.GuildText
       | ChannelType.GuildVoice
       | ChannelType.GuildCategory
@@ -151,5 +159,34 @@ export namespace Channel {
   }
 
   export namespace REST {
+    export namespace GET {
+      export namespace GetChannel {}
+
+      export namespace GetGuildChannels {}
+    }
+
+    export namespace PATCH {
+      export namespace ModifyChannel {}
+
+      export namespace ModifyGuildChannelPositions {}
+    }
+
+    export namespace PUT {
+      export namespace GroupDMAddRecipient {}
+    }
+
+    export namespace POST {
+      export namespace CreateGuildChannel {}
+
+      export namespace TriggerTypingIndicator {}
+
+      export namespace FollowNewsChannel {}
+    }
+
+    export namespace DELETE {
+      export namespace DeleteOrCloseChannel {}
+
+      export namespace GroupDMRemoveRecipient {}
+    }
   }
 }

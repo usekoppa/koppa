@@ -73,7 +73,7 @@ export namespace OAuth2 {
           /** The scopes the user has authorised the application for. */
           scopes: OAuth2Scopes[];
           /** The user who has authorised, if the user has authorised with the `identify` scope. */
-          user?: User.Partial;
+          user?: User.Partial & Pick<User, "flags">;
         }
       }
     }

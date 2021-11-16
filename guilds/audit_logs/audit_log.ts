@@ -4,7 +4,7 @@ import type { GuildIntegration } from "../integrations/integration.ts";
 import type { AuditLogEntry } from "./entry.ts";
 import type { Webhook } from "../../webhooks/webhook.ts";
 import type { User } from "../../users/user.ts";
-import type { Thread } from "../../channels/threads/thread.ts";
+import type { Thread } from "../../threads/thread.ts";
 
 /**
  * An audit log object associated with a guild.

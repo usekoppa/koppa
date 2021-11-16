@@ -25,7 +25,7 @@ export interface Application {
   /** The URL of the application's privacy policy. */
   privacy_policy_url?: string;
   /** Information about the owner of the application. */
-  owner?: Omit<User.Partial, "flags">;
+  owner?: User.Partial;
   /** The summary field for the store page of its primary SKU - Only for for games sold on Discord. */
   summary: string;
   /** The hexadecimally encoded key for verification in interactions and the GameSDK's `GetTicket` function. */

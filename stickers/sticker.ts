@@ -17,7 +17,7 @@ export interface Sticker<Type extends StickerType = StickerType>
   format_type: StickerFormat;
   available?: boolean;
   guild_id?: Snowflake;
-  user?: User.Partial;
+  user?: User.Partial & Pick<User, "flags">;
   sort_value?: number;
 }
 

@@ -55,7 +55,7 @@ export namespace GuildWidget {
           name: string;
           instant_invite: `https://discord.com/invite/${string}`;
           channels: { id: Snowflake; name: string; position: number }[];
-          members: Omit<User.Partial, "flags"> & {
+          members: User.Partial & {
             status: "online" | "idle" | "dnd";
             avatar_url:
               `https://cdn.discordapp.com/widget-avatars/${string}/${string}`;
@@ -63,6 +63,8 @@ export namespace GuildWidget {
           presence_count: number;
         }
       }
+
+      export namespace GetGuildWidgetImage {}
     }
 
     export namespace PATCH {

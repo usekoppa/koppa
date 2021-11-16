@@ -52,4 +52,14 @@ export namespace GuildIntegration {
     /** Whether or not the integration is enabled. */
     enabled: boolean;
   }
+
+  export namespace REST {
+    export namespace GET {
+      export namespace GetGuildIntegrations {}
+    }
+
+    export namespace DELETE {
+      export namespace DeleteGuildIntegration {}
+    }
+  }
 }

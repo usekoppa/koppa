@@ -28,6 +28,7 @@ export interface User extends User.Partial {
   email?: Nullable<string>;
   premium_type?: UserPremiumType;
   public_flags?: UserFlags | number;
+  flags?: UserFlags | number;
 }
 
 export namespace User {
@@ -36,7 +37,6 @@ export namespace User {
     username: string;
     discriminator: UserDiscriminator;
     avatar: Nullable<string>;
-    flags?: UserFlags | number;
   }
 
   export namespace REST {

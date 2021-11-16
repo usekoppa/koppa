@@ -7,7 +7,7 @@ export interface GuildBan {
   /* The reason for the ban. */
   reason: Nullable<string>;
   /* The banned user. */
-  user: Omit<User.Partial, "flags"> & Pick<User, "public_flags">;
+  user: User.Partial & Pick<User, "public_flags">;
 }
 
 export namespace GuildBan {

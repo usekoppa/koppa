@@ -29,6 +29,8 @@ export namespace VoiceRegion {
 
         export type Response = VoiceRegion[];
       }
+
+      export namespace GetGuildVoiceRegions {}
     }
   }
 }

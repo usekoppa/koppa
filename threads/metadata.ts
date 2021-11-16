@@ -1,4 +1,4 @@
-import type { ISO8601 } from "../../types/mod.ts";
+import type { ISO8601 } from "../types/mod.ts";
 import type { ThreadType } from "./type.ts";
 
 export interface ThreadMetadata<

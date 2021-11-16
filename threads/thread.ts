@@ -1,10 +1,10 @@
-import { ISO8601, Snowflake } from "../../types/mod.ts";
-import { encodeQueryString } from "../../_internals/encode_query_string.ts";
-import { Channel } from "../channel.ts";
+import { ISO8601, Snowflake } from "../types/mod.ts";
+import { encodeQueryString } from "../_internals/encode_query_string.ts";
+import { Channel } from "../channels/channel.ts";
 import { ThreadMember } from "./member.ts";
 import { ThreadMetadata } from "./metadata.ts";
 import { ThreadType } from "./type.ts";
-import { Permission } from "../../permissions/mod.ts";
+import { Permission } from "../permissions/permission.ts";
 
 export type Thread<
   Type extends ThreadType = ThreadType,
@@ -257,6 +257,14 @@ export namespace Thread {
           has_more: boolean;
         }
       }
+
+      export namespace GetThreadMember {
+        //TODO(@zorbyte)
+      }
+
+      export namespace ListThreadMembers {
+        //TODO(@zorbyte)
+      }
     }
 
     export namespace POST {
@@ -273,8 +281,33 @@ export namespace Thread {
        *
        * https://discord.com/developers/docs/resources/channel#start-thread-with-message
        */
+      export namespace StartThreadWithMessage {
+        //TODO(@zorbyte)
+      }
+
+      export namespace StartThreadWithoutMessage {
+        // TODO(@zorbyte)
+      }
     }
 
-    export namespace PUT {}
+    export namespace PUT {
+      export namespace JoinThread {
+        // TODO(@zorbyte)
+      }
+
+      export namespace AddThreadMember {
+        // TODO(@zorbyte)
+      }
+    }
+
+    export namespace DELETE {
+      export namespace LeaveThread {
+        // TODO(@zorbyte)
+      }
+
+      export namespace RemoveThreadMember {
+        // TODO(@zorbyte)
+      }
+    }
   }
 }

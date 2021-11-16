@@ -7,5 +7,5 @@ export interface TeamMember {
   membership_state: TeamMembershipState;
   permissions: TeamMemberPermissions;
   team_id: Snowflake;
-  user: Omit<User.Partial, "flags">;
+  user: User.Partial;
 }

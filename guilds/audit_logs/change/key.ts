@@ -1,4 +1,4 @@
-import type { PermissionOverwrite } from "../../../channels/overwrites/overwrite.ts";
+import type { PermissionOverwrite } from "../../../permissions/overwrites/overwrite.ts";
 import type { Snowflake } from "../../../types/snowflake.ts";
 import type { GuildDefaultMessageNotificationLevel } from "../../default_message_notification_level.ts";
 import type { GuildExplicitContentFilterLevel } from "../../explicit_content_filter_level.ts";

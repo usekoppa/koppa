@@ -1,4 +1,4 @@
-import { ChannelType } from "../channel_type.ts";
+import { ChannelType } from "../channels/channel_type.ts";
 
 export type ThreadType =
   | ChannelType.GuildPublicThread
