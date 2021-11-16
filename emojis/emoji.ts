@@ -1,3 +1,4 @@
+import { GatewayDispatchEvent } from "../gateway/dispatch_event.ts";
 import { Permission } from "../permissions/permission.ts";
 import { Image } from "../types/image/image.ts";
 import { Snowflake } from "../types/snowflake.ts";
@@ -224,13 +225,15 @@ export namespace Emoji {
 
   export namespace Gateway {
     export namespace MessageReactionAdd {
-      export type Payload = _Payload;
+      export type Event = GatewayDispatchEvent.MessageReactionAdd;
+      export type Data = _Data;
     }
 
     export namespace MessageReactionRemove {
-      export type Payload = _Payload;
+      export type Event = GatewayDispatchEvent.MessageReactionRemove;
+      export type Data = _Data;
     }
 
-    type _Payload = Pick<Emoji, "id" | "name"> & { animated?: true };
+    type _Data = Pick<Emoji, "id" | "name"> & { animated?: true };
   }
 }

@@ -1,4 +1,4 @@
-import { GatewayDispatchEvents } from "./dispatch_event.ts";
+import { GatewayDispatchEvent } from "./dispatch_event.ts";
 import { GatewayOpcode } from "./opcode.ts";
 
 export interface GatewayPayload<
@@ -8,5 +8,5 @@ export interface GatewayPayload<
   op: Opcode;
   d: Data;
   s: Opcode extends GatewayOpcode.Dispatch ? number : null;
-  t: Opcode extends GatewayOpcode.Dispatch ? GatewayDispatchEvents : null;
+  t: Opcode extends GatewayOpcode.Dispatch ? GatewayDispatchEvent : null;
 }

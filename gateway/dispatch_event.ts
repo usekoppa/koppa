@@ -1,5 +1,5 @@
 /** https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events */
-export enum GatewayDispatchEvents {
+export enum GatewayDispatchEvent {
   /** New guild channel created. */
   ChannelCreate = "CHANNEL_CREATE",
   ChannelUpdate = "CHANNEL_UPDATE",
