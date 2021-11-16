@@ -4,7 +4,7 @@ import type { SerialisedPermissions } from "../permissions/serialised.ts";
 import type { GuildVerificationLevel } from "./verification_level.ts";
 import type { GuildDefaultMessageNotificationLevel } from "./default_message_notification_level.ts";
 import type { GuildExplicitContentFilterLevel } from "./explicit_content_filter_level.ts";
-import type { Role } from "./roles/role.ts";
+import type { Role } from "../roles/role.ts";
 import type { GuildFeature } from "./feature.ts";
 import type { SystemChannelFlags } from "./system_channel_flags.ts";
 import type { Channel } from "../channels/channel.ts";

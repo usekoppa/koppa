@@ -1,9 +1,9 @@
-import type { User } from "../../users/mod.ts";
-import type { ISO8601, Snowflake } from "../../types/mod.ts";
-import type { GuildIntegrationAccount } from "./account.ts";
-import type { GuildIntegrationExpireBehaviour } from "./expiry_behaviour.ts";
-import type { GuildIntegrationType } from "./type.ts";
-import type { GuildIntegrationApplication } from "./application.ts";
+import type { User } from "../users/user.ts";
+import type { ISO8601, Snowflake } from "../types/mod.ts";
+import type { IntegrationAccount } from "./account.ts";
+import type { IntegrationExpireBehaviour } from "./expire_behaviour.ts";
+import type { IntegrationType } from "./type.ts";
+import type { IntegrationApplication } from "./application.ts";
 
 /**
  * An integration for a guild.
@@ -11,7 +11,9 @@ import type { GuildIntegrationApplication } from "./application.ts";
  *
  * https://discord.com/developers/docs/resources/guild#integration-object-integration-structure
  */
-export interface GuildIntegration extends GuildIntegration.Partial {
+export interface Integration extends Integration.Partial {
+  /** Whether or not the integration is enabled. */
+  enabled: boolean;
   /** Is this integration syncing. */
   syncing?: boolean;
   /** The ID that the integration uses for subscribers. */
@@ -19,7 +21,7 @@ export interface GuildIntegration extends GuildIntegration.Partial {
   /** Whether emoticons should be synced for the integration (Twitch only currently). */
   enable_emoticons?: boolean;
   /** The behavior of expiring the integration's subscribers. */
-  expire_behavior?: GuildIntegrationExpireBehaviour;
+  expire_behavior?: IntegrationExpireBehaviour;
   /** The grace period (in days) before expiring the integration's subscribers. */
   expire_grace_period?: number;
   /** The user for the integration. */
@@ -31,10 +33,10 @@ export interface GuildIntegration extends GuildIntegration.Partial {
   /** Has the integration been revoked. */
   revoked?: boolean;
   /** The bot/OAuth2 application for discord integrations. */
-  application?: GuildIntegrationApplication;
+  application?: IntegrationApplication;
 }
 
-export namespace GuildIntegration {
+export namespace Integration {
   /**
    * The bare minimum amount of data for an integration.
    *
@@ -46,11 +48,9 @@ export namespace GuildIntegration {
     /** The name of the integration. */
     name: string;
     /** The type of integration. */
-    type: GuildIntegrationType;
+    type: IntegrationType;
     /** The account information of the integration. */
-    account: GuildIntegrationAccount;
-    /** Whether or not the integration is enabled. */
-    enabled: boolean;
+    account: IntegrationAccount;
   }
 
   export namespace REST {

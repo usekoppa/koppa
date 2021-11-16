@@ -3,7 +3,7 @@
  *
  * https://discord.com/developers/docs/resources/guild#integration-object-integration-structure
  */
-export enum GuildIntegrationExpireBehaviour {
+export enum IntegrationExpireBehaviour {
   /** Remove the integration role from the ex-subscriber when the subscription expires. */
   RemoveRole = 0,
   /** Kicks the subscriber, the docs don't specify. */

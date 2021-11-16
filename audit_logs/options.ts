@@ -1,4 +1,4 @@
-import { Snowflake } from "../../types/snowflake.ts";
+import { Snowflake } from "../types/snowflake.ts";
 
 /**
  * Extra options for an Audit Log entry depending on the action.

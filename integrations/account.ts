@@ -3,7 +3,7 @@
  *
  * https://discord.com/developers/docs/resources/guild#integration-account-object
  */
-export interface GuildIntegrationAccount {
+export interface IntegrationAccount {
   /** The ID of the account. */
   id: string;
   /** The name of the account. */

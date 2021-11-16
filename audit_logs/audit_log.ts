@@ -1,10 +1,10 @@
-import { encodeQueryString } from "../../_internals/encode_query_string.ts";
-import type { Snowflake } from "./../../types/snowflake.ts";
-import type { GuildIntegration } from "../integrations/integration.ts";
+import { encodeQueryString } from "../_internals/encode_query_string.ts";
+import type { Snowflake } from "./../types/snowflake.ts";
+import type { Integration } from "../integrations/integration.ts";
 import type { AuditLogEntry } from "./entry.ts";
-import type { Webhook } from "../../webhooks/webhook.ts";
-import type { User } from "../../users/user.ts";
-import type { Thread } from "../../threads/thread.ts";
+import type { Webhook } from "../webhooks/webhook.ts";
+import type { User } from "../users/user.ts";
+import type { Thread } from "../threads/thread.ts";
 
 /**
  * An audit log object associated with a guild.
@@ -19,7 +19,7 @@ export interface AuditLog {
   /** The webhooks found in a guild's Audit Log. */
   webhooks: Webhook[];
   /** The integrations found in a guild's Audit Log. */
-  integrations: Omit<GuildIntegration.Partial, "enabled">[];
+  integrations: Integration.Partial[];
 
   /**
    * The threads found in a guild's Audit Log.

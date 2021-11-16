@@ -1,4 +1,4 @@
-import { $TODO } from "../../_internals/utils.ts";
+import { $TODO } from "../_internals/utils.ts";
 
 export type Role = Role.Partial;
 export namespace Role {

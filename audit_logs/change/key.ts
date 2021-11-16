@@ -1,13 +1,13 @@
-import type { PermissionOverwrite } from "../../../permissions/overwrites/overwrite.ts";
-import type { Snowflake } from "../../../types/snowflake.ts";
-import type { GuildDefaultMessageNotificationLevel } from "../../default_message_notification_level.ts";
-import type { GuildExplicitContentFilterLevel } from "../../explicit_content_filter_level.ts";
-import type { GuildIntegrationExpireBehaviour } from "../../integrations/expiry_behaviour.ts";
-import type { GuildMFALevel } from "../../mfa_level.ts";
-import type { GuildVerificationLevel } from "../../verification_level.ts";
-import type { StickerFormat } from "../../../stickers/format.ts";
+import type { PermissionOverwrite } from "../../permissions/overwrites/overwrite.ts";
+import type { Snowflake } from "../../types/snowflake.ts";
+import type { GuildDefaultMessageNotificationLevel } from "../../guilds/default_message_notification_level.ts";
+import type { GuildExplicitContentFilterLevel } from "../../guilds/explicit_content_filter_level.ts";
+import type { IntegrationExpireBehaviour } from "../../integrations/expire_behaviour.ts";
+import type { GuildMFALevel } from "../../guilds/mfa_level.ts";
+import type { GuildVerificationLevel } from "../../guilds/verification_level.ts";
+import type { StickerFormat } from "../../stickers/format.ts";
 import type { Role as RoleNS } from "../../roles/role.ts";
-import type { SerialisedPermissions } from "../../../permissions/serialised.ts";
+import type { SerialisedPermissions } from "../../permissions/serialised.ts";
 
 /** The type of the aspect in question that changed with this entry. */
 export type AuditLogChangeKey =
@@ -159,7 +159,7 @@ export namespace AuditLogChangeKey {
     export const Emoticons = "enable_emoticons";
 
     /** Integration subscription expiry behaviour was changed. */
-    export type ExpireBehaviour = GuildIntegrationExpireBehaviour;
+    export type ExpireBehaviour = IntegrationExpireBehaviour;
     export const ExpireBehaviour = "expire_behavior";
 
     /** An integration's grace period length was changed for subscription expiries. */

@@ -1,7 +1,7 @@
-import { Application } from "../../application/mod.ts";
-import { User } from "../../users/mod.ts";
+import { Application } from "../application/application.ts";
+import { User } from "../users/user.ts";
 
 /** https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
-export type GuildIntegrationApplication =
+export type IntegrationApplication =
   & Pick<Application, "id" | "name" | "icon" | "description" | "summary">
   & { bot?: Exclude<User, "bot"> & { bot: true } };
