@@ -11,7 +11,7 @@ import { Nullable } from "../_internals/utils.ts";
 export interface VoiceState {
   /** The ID of the guild this voice state is for. */
   guild_id?: Snowflake;
-  /* The ID of the channel this user is connected to. */
+  /** The ID of the channel this user is connected to. */
   channel_id: Nullable<Snowflake>; //	the channel id this user is connected to
   /** The ID of the user this voice state is for. */
   user_id: Snowflake; //the user id this voice state is for

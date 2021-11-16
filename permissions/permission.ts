@@ -53,9 +53,9 @@ export namespace Permission {
   /** Allows creation of instant invites - Channel types: T, V, S. */
   export const CreateInstantInvite = 1 << 0;
 
-  /* Allows kicking members. */
+  /** Allows kicking members. */
   export type KickMembers = 0x0000000002;
-  /* Allows kicking members. */
+  /** Allows kicking members. */
   export const KickMembers = 1 << 1;
 
   /** Allows banning members. */

@@ -1,8 +1,8 @@
-import type { Snowflake } from "../types/mod.ts";
-import { Nullable } from "../_internals/utils.ts";
-import { Team } from "./teams/mod.ts";
-import { User } from "../users/mod.ts";
-import { ApplicationFlags } from "./flags.ts";
+import type { Snowflake } from "../types/snowflake.ts";
+import type { Nullable } from "../_internals/utils.ts";
+import type { Team } from "../teams/team.ts";
+import type { User } from "../users/user.ts";
+import type { ApplicationFlags } from "./flags.ts";
 
 /** Properties of an application */
 export interface Application {

@@ -1,10 +1,10 @@
 /** https://discord.com/developers/docs/resources/voice#voice-region-object-voice-region-structure */
 export interface VoiceRegion {
-  /* The unique ID for the region. */
+  /** The unique ID for the region. */
   id: string;
-  /* Name of the region. */
+  /** Name of the region. */
   name: string;
-  /* Whether this is the closest server to the current user's client. */
+  /** Whether this is the closest server to the current user's client. */
   optimal: boolean;
   /** Whether this is a deprecated voice region (avoid switching to these). */
   deprecated: boolean;

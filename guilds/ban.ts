@@ -4,9 +4,9 @@ import type { Nullable } from "../_internals/utils.ts";
 
 /** https://discord.com/developers/docs/resources/guild#ban-object-ban-structure */
 export interface GuildBan {
-  /* The reason for the ban. */
+  /** The reason for the ban. */
   reason: Nullable<string>;
-  /* The banned user. */
+  /** The banned user. */
   user: User.Partial & Pick<User, "public_flags">;
 }
 

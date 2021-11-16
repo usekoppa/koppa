@@ -1,5 +1,5 @@
-import type { Snowflake } from "../../../types/mod.ts";
-import type { User } from "../../../users/mod.ts";
+import type { Snowflake } from "../../types/snowflake.ts";
+import type { User } from "../../users/user.ts";
 import type { TeamMembershipState } from "./membership_state.ts";
 import type { TeamMemberPermissions } from "./permissions.ts";
 

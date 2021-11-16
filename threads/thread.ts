@@ -136,7 +136,7 @@ export namespace Thread {
 
         /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads-query-string-params */
         export interface QueryString {
-          /* Returns threads before this (ISO8601) timestamp. */
+          /** Returns threads before this (ISO8601) timestamp. */
           before?: ISO8601;
           /**	Optional maximum number of threads to return. */
           limit?: number;
@@ -183,7 +183,7 @@ export namespace Thread {
 
         /** https://discord.com/developers/docs/resources/channel#list-private-archived-threads-query-string-params */
         export interface QueryString {
-          /* Returns threads before this (ISO8601) timestamp. */
+          /** Returns threads before this (ISO8601) timestamp. */
           before?: ISO8601;
           /** Optional maximum number of threads to return. */
           limit?: number;
@@ -237,7 +237,7 @@ export namespace Thread {
 
         /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads-query-string-params */
         export interface QueryString {
-          /* Returns threads before this ID. */
+          /** Returns threads before this ID. */
           before?: Snowflake;
           /** Optional maximum number of threads to return. */
           limit?: number;
