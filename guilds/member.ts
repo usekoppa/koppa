@@ -1,6 +1,8 @@
+import { GatewayIntents } from "../gateway/intents.ts";
 import type { SerialisedPermissions } from "../permissions/serialised.ts";
 import type { ISO8601, Snowflake } from "../types/mod.ts";
 import type { User } from "../users/user.ts";
+import { encodeQueryString } from "../_internals/encode_query_string.ts";
 import type { Nullable } from "../_internals/utils.ts";
 
 /**
@@ -32,7 +34,39 @@ export namespace GuildMember {
     export namespace GET {
       export namespace GetGuildMember {}
 
-      export namespace ListGuildMembers {}
+      /**
+       * List Guild Members
+       * GET `/guilds/{guild.id}/members`
+       *
+       * Returns a list of guild member objects that are members of the guild.
+       *
+       * This endpoint is restricted according to whether the `GUILD_MEMBERS` Privileged Intent is enabled for your application.
+       *
+       * All parameters to this endpoint are optional.
+       *
+       * https://discord.com/developers/docs/resources/guild#list-guild-members
+       */
+      export namespace ListGuildMembers {
+        export type Route<GuildID extends Snowflake = Snowflake> =
+          `/guilds/${GuildID}/members`;
+
+        export function Route<GuildID extends Snowflake>(guildID: GuildID) {
+          return `/guilds/${guildID}/members`;
+        }
+
+        export type Intents = [GatewayIntents];
+
+        export interface QueryString {
+          /** Max number of members to return (1-1000) - Default: 1. */
+          limit?: number;
+          /** The highest user ID in the previous page - Default: 0. */
+          after?: Snowflake;
+        }
+
+        export function QueryString(query: QueryString) {
+          return encodeQueryString(query);
+        }
+      }
 
       export namespace SearchGuildMembers {}
     }

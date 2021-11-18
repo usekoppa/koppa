@@ -30,7 +30,7 @@ export namespace AuditLogOptions {
     | ChannelOverwrite.MemberChannelOverwrite;
 
   export namespace ChannelOverwrite {
-    export const enum OverwrittenEntityType {
+    export enum OverwrittenEntityType {
       Role = "0",
       Member = "1",
     }

@@ -25,7 +25,9 @@ export namespace VoiceRegion {
        */
       export namespace ListVoiceRegions {
         export type Route = "/voice/regions";
-        export const Route: Route = "/voice/regions";
+        export function Route(): Route {
+          return "/voice/regions";
+        }
 
         export type Response = VoiceRegion[];
       }

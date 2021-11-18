@@ -87,7 +87,9 @@ export namespace Application {
        */
       export namespace GetCurrentBotApplicationInformation {
         export type Route = "/oauth2/applications/@me";
-        export const Route: Route = "/oauth2/applications/@me";
+        export function Route(): Route {
+          return "/oauth2/applications/@me";
+        }
 
         export type Response = Omit<Application.Bot, "flags">;
       }

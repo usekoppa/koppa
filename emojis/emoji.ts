@@ -108,7 +108,9 @@ export namespace Emoji {
         export const Headers = AuditLogReasonHeaders;
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params */
         export interface Body {
@@ -151,7 +153,9 @@ export namespace Emoji {
         export const Headers = AuditLogReasonHeaders;
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
         export interface Body {
@@ -194,7 +198,9 @@ export namespace Emoji {
         export const Headers = AuditLogReasonHeaders;
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
       }
     }
 

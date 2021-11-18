@@ -1,4 +1,4 @@
-import type { GuildIntegration } from "../../guilds/integrations/mod.ts";
+import type { Integration } from "../../integrations/mod.ts";
 import type { Snowflake } from "../../types/mod.ts";
 import type { UserConnectionVisibility } from "./visibility.ts";
 import { OAuth2Scopes } from "../../OAuth2/mod.ts";
@@ -8,7 +8,7 @@ export interface UserConnection {
   name: string;
   type: string;
   revoked?: boolean;
-  integrations?: GuildIntegration[];
+  integrations?: Integration[];
   verified: boolean;
   friend_sync: boolean;
   show_activity: boolean;
@@ -20,7 +20,9 @@ export namespace UserConnection {
     export namespace GET {
       export namespace GetUserConnections {
         export type Route = "/users/@me/connections";
-        export const Route: Route = "/users/@me/connections";
+        export function Route(): Route {
+          return "/users/@me/connections";
+        }
 
         export namespace OAuth2 {
           export type Scopes = [OAuth2Scopes.Guilds.Guilds];

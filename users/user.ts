@@ -43,7 +43,9 @@ export namespace User {
     export namespace GET {
       export namespace GetCurrentUser {
         export type Route = "/users/@me";
-        export const Route: Route = "/users/@me";
+        export function Route(): Route {
+          return "/users/@me";
+        }
 
         export namespace OAuth2 {
           export type Scopes = [
@@ -77,7 +79,9 @@ export namespace User {
 
       export namespace GetCurrentUserGuilds {
         export type Route = "/users/@me/guilds";
-        export const Route: Route = "/users/@me/guilds";
+        export function Route(): Route {
+          return "/users/@me/guilds";
+        }
 
         export interface QueryString {
           before: Snowflake;
@@ -100,7 +104,9 @@ export namespace User {
     export namespace PATCH {
       export namespace ModifyCurrentUser {
         export type Route = "/users/@me";
-        export const Route: Route = "/users/@me";
+        export function Route(): Route {
+          return "/users/@me";
+        }
 
         export interface Body {
           /** If passed, modifies the user's username if available - discriminator may change on success. */
@@ -116,7 +122,9 @@ export namespace User {
     export namespace POST {
       export namespace CreateDM {
         export type Route = "/users/@me/channels";
-        export const Route: Route = "/users/@me/channels";
+        export function Route(): Route {
+          return "/users/@me/channels";
+        }
 
         export interface Body {
           /** The recipient to open a DM channel with. */
@@ -128,7 +136,9 @@ export namespace User {
 
       export namespace CreateGroupDM {
         export type Route = "/users/@me/channels";
-        export const Route: Route = "/users/@me/channels";
+        export function Route(): Route {
+          return "/users/@me/channels";
+        }
 
         export namespace OAuth2 {
           export type Scopes = [OAuth2Scopes.GroupDM.Join];

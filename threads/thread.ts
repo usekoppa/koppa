@@ -147,7 +147,9 @@ export namespace Thread {
         }
 
         export type Permissions = [Permission.ReadMessageHistory];
-        export const Permissions = [Permission.ReadMessageHistory];
+        export function Permissions(): Permissions {
+          return [Permission.ReadMessageHistory];
+        }
 
         /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads-response-body */
         export interface Response {
@@ -198,10 +200,12 @@ export namespace Thread {
           Permission.ManageThreads,
         ];
 
-        export const Permissions = [
-          Permission.ReadMessageHistory,
-          Permission.ManageThreads,
-        ];
+        export function Permissions(): Permissions {
+          return [
+            Permission.ReadMessageHistory,
+            Permission.ManageThreads,
+          ];
+        }
 
         /** https://discord.com/developers/docs/resources/channel#list-private-archived-threads-response-body */
         export interface Response {

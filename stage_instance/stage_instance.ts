@@ -82,8 +82,10 @@ export namespace StageInstance {
        * This endpoint supports the X-Audit-Log-Reason header.
        */
       export namespace CreateStageInstance {
-        export type Route = `/stage-instances`;
-        export const Route: Route = `/stage-instances`;
+        export type Route = "/stage-instances";
+        export function Route(): Route {
+          return "/stage-instances";
+        }
 
         export type Headers = AuditLogReasonHeaders;
         export const Headers = AuditLogReasonHeaders;

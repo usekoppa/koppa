@@ -47,8 +47,10 @@ export namespace Sticker {
       }
 
       export namespace GetNitroStickerPacks {
-        export type Route = `/sticker-packs`;
-        export const Route: Route = "/sticker-packs";
+        export type Route = "/sticker-packs";
+        export function Route(): Route {
+          return "/sticker-packs";
+        }
 
         export interface Response {
           sticker_packs: StickerPack[];
@@ -66,7 +68,9 @@ export namespace Sticker {
         }
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         export type Response = Guild[];
       }
@@ -85,7 +89,9 @@ export namespace Sticker {
         }
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         export type Response = Guild;
       }
@@ -122,7 +128,9 @@ export namespace Sticker {
         }
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         export type Response =
           & Guild
@@ -149,7 +157,9 @@ export namespace Sticker {
         }
 
         export type Permissions = [Permission.ManageEmojisAndStickers];
-        export const Permissions = [Permission.ManageEmojisAndStickers];
+        export function Permissions(): Permissions {
+          return [Permission.ManageEmojisAndStickers];
+        }
 
         export type Response = Guild;
       }

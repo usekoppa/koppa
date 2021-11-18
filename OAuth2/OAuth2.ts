@@ -25,7 +25,9 @@ export namespace OAuth2 {
        */
       export namespace GetCurrentBotApplicationInformation {
         export type Route = "/oauth2/applications/@me";
-        export const Route: Route = "/oauth2/applications/@me";
+        export function Route(): Route {
+          return "/oauth2/applications/@me";
+        }
 
         export type Response = Omit<Application.Bot, "flags">;
       }
@@ -40,7 +42,9 @@ export namespace OAuth2 {
        */
       export namespace GetCurrentAuthorisationInformation {
         export type Route = "/oauth2/@me";
-        export const Route: Route = "/oauth2/@me";
+        export function Route(): Route {
+          return "/oauth2/@me";
+        }
 
         export interface Headers<Token extends string = string> {
           Authorization: `Bearer ${Token}`;

@@ -1,4 +1,6 @@
 export namespace Gateway {
   export type Route = "/gateway";
-  export const Route: Route = "/gateway";
+  export function Route(): Route {
+    return "/gateway";
+  }
 }

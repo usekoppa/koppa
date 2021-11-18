@@ -6,6 +6,3 @@ export { GuildFeature } from "./feature.ts";
 
 export * from "./guild.ts";
 export * from "./member.ts";
-export * from "./roles/mod.ts";
-export * from "./integrations/mod.ts";
-export * from "./audit_logs/mod.ts";
