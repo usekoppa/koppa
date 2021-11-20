@@ -1,53 +1,10 @@
 import { DISCORD_EPOCH, Snowflake } from "../api/mod.ts";
+
 /**
  * A utility to use Discord's globally unique IDs.
  *
- * @see {@link https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right | Snowflake ID Format Structure}
+ * https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
  */
-export class SnowflakeUtil {
-  /**
-   * The timestamp at which the Snowflake was generated.
-   *
-   * @remarks
-   * This typically correlates to the creation timestamp of an Entity.   *
-   */
-  readonly timestamp!: Date;
-  readonly workerID!: number;
-  readonly processID!: number;
-
-  /**
-   * For every Snowflake ID that is generated on the process that generated this Snowflake ID,
-   * this number is incremented.
-   */
-  readonly increment!: number;
-
-  constructor(readonly raw: Snowflake) {
-    if (!SnowflakeUtil.isValid(raw)) {
-      throw new TypeError("Value was not a snowflake");
-    }
-
-    const snowflake = BigInt(raw);
-    this.#populate(snowflake);
-  }
-
-  #populate(snowflake: bigint) {
-    // Resolve the snowflake into its data types.
-    // https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
-
-    const timestamp = new Date(Number((snowflake >> 22n) + DISCORD_EPOCH));
-    Reflect.set(this, "timestamp", timestamp);
-
-    const workerID = Number((snowflake & 0x3E0000n) >> 17n);
-    Reflect.set(this, "workerID", workerID);
-
-    const processID = Number((snowflake & 0x1F000n) >> 12n);
-    Reflect.set(this, "processID", processID);
-
-    const increment = Number(snowflake & 0xFFFn);
-    Reflect.set(this, "increment", increment);
-  }
-}
-
 export namespace SnowflakeUtil {
   /**
    * Gets the timestamp data from a snowflake.
@@ -108,7 +65,7 @@ export namespace SnowflakeUtil {
   /**
    * Creates a rudimentary Snowflake ID from a timestamp.
    *
-   * @see {@link https://discord.com/developers/docs/reference#snowflake-ids-in-pagination-generating-a-snowflake-id-from-a-timestamp-example | Generating a snowflake ID from a Timestamp Example}
+   * https://discord.com/developers/docs/reference#snowflake-ids-in-pagination-generating-a-snowflake-id-from-a-timestamp-example
    *
    * @param timestamp - The timestamp to use in the first 42 bits of the snowflake.
    * @returns A rudimentary Snowflake ID.
