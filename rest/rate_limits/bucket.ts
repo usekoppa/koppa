@@ -1,4 +1,5 @@
 import { Nullable } from "../../utils/type_util.ts";
+import { wait } from "../../utils/wait.ts";
 
 export interface Bucket {
   /** How many request reservations are remaining. */
@@ -67,11 +68,5 @@ export namespace Bucket {
       remaining,
       retryAfter: null,
     };
-  }
-
-  function wait(time: number) {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, time);
-    });
   }
 }

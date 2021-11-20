@@ -1,9 +1,10 @@
-import { BucketStorage } from "./ratelimits/storage.ts";
+import { Authorisation, AuthorisationType } from "./authorisation.ts";
+import { RateLimiter } from "./rate_limits/rate_limiter.ts";
 import { DiscordRequest } from "./request.ts";
 
 export interface State {
   authorisation: Authorisation;
-  storage: BucketStorage;
+  limiter: RateLimiter;
 }
 
 export namespace State {
@@ -18,7 +19,7 @@ export namespace State {
 
     const state: Readonly<State> = Object.freeze({
       authorisation,
-      storage: BucketStorage.Create(),
+      limiter: RateLimiter.Create(),
     });
 
     return state;
@@ -58,10 +59,10 @@ export namespace State {
       body,
     });
 
-    let storage = await BucketStorage.limit(state.storage, request);
+    let limiter = await RateLimiter.limit(state.limiter, request);
     const response = await fetch(request);
-    storage = await BucketStorage.update(
-      storage,
+    limiter = await RateLimiter.update(
+      limiter,
       discordRequest.method,
       response,
     );
@@ -70,15 +71,8 @@ export namespace State {
       body: await response.json(),
       state: {
         ...state,
-        storage,
+        limiter,
       },
     };
   }
-}
-
-export type AuthorisationType = "Bot" | "Bearer";
-
-export interface Authorisation {
-  token: string;
-  type: AuthorisationType;
 }

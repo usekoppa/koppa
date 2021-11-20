@@ -1,12 +1,12 @@
+import { SnowflakeUtil } from "../../utils/snowflake_util.ts";
 import { PathLike } from "../../utils/type_util.ts";
 import { produce } from "../deps.ts";
 import { RequestMethod } from "../method.ts";
 // import { DiscordRequest } from "../request.ts";
 import { RWMutex } from "../rwmutex.ts";
 import { Bucket } from "./bucket.ts";
-import { produceRouteID } from "./produce_route_ID.ts";
 
-export interface BucketStorage {
+export interface RateLimiter {
   readonly mutex: RWMutex;
   readonly global: Bucket;
   // The route ID -> the hash.
@@ -16,8 +16,8 @@ export interface BucketStorage {
   readonly latency: number;
 }
 
-export namespace BucketStorage {
-  export function Create(): BucketStorage {
+export namespace RateLimiter {
+  export function Create(): RateLimiter {
     return {
       mutex: new RWMutex(),
       // https://discord.com/developers/docs/topics/rate-limits#global-rate-limit
@@ -35,40 +35,30 @@ export namespace BucketStorage {
     };
   }
 
-  export async function limit(storage: BucketStorage, request: Request) {
-    storage.mutex.lock();
-    const global = await Bucket.reserve(storage.global, storage.latency);
+  export async function limit(limiter: RateLimiter, request: Request) {
+    limiter.mutex.lock();
+    const global = await Bucket.reserve(limiter.global, limiter.latency);
     const routeID = produceRouteID(
       request.method as RequestMethod,
       new URL(request.url).pathname as PathLike,
     );
 
-    const hash = getHash(storage, routeID);
+    const hash = getHash(limiter, routeID);
     let bucket: Bucket;
     if (hash) {
-      bucket = getBucket(storage, hash);
-      bucket = await Bucket.reserve(bucket, storage.latency);
+      bucket = getBucket(limiter, hash);
+      bucket = await Bucket.reserve(bucket, limiter.latency);
     }
 
-    return produce(storage, (draft) => {
+    return produce(limiter, (draft) => {
       draft.global = global;
       if (hash) draft.buckets.set(hash, bucket);
       draft.mutex.unlock();
     });
   }
 
-  function getBucket(
-    storage: BucketStorage,
-    hash: string,
-  ) {
-    storage.mutex.readLock();
-    const bucket = storage.buckets.get(hash)!;
-    storage.mutex.readUnlock();
-    return bucket;
-  }
-
   export async function update(
-    storage: BucketStorage,
+    limiter: RateLimiter,
     method: RequestMethod,
     response: Response,
   ) {
@@ -80,7 +70,7 @@ export namespace BucketStorage {
     );
 
     let hash = getHash(
-      storage,
+      limiter,
       routeID,
     );
 
@@ -89,7 +79,7 @@ export namespace BucketStorage {
     let retryAfter: number | null = null;
 
     if (hash) {
-      bucket = getBucket(storage, hash);
+      bucket = getBucket(limiter, hash);
     } else {
       if (response.status === 429) {
         isGlobalRateLimit = response.headers.has("X-RateLimit-Global");
@@ -113,7 +103,7 @@ export namespace BucketStorage {
             response.headers.has("X-RateLimit-Limit") ||
             response.headers.has("X-RateLimit-Reset-After"))
         ) {
-          return storage;
+          return limiter;
         }
 
         hash = response.headers.get("X-RateLimit-Bucket")!;
@@ -135,8 +125,8 @@ export namespace BucketStorage {
       }
     }
 
-    storage.mutex.lock();
-    return produce(storage, (draft) => {
+    limiter.mutex.lock();
+    return produce(limiter, (draft) => {
       draft.latency = latency;
       if (isGlobalRateLimit) {
         draft.global = {
@@ -152,14 +142,67 @@ export namespace BucketStorage {
     });
   }
 
+  function getBucket(
+    limiter: RateLimiter,
+    hash: string,
+  ) {
+    limiter.mutex.readLock();
+    const bucket = limiter.buckets.get(hash)!;
+    limiter.mutex.readUnlock();
+    return bucket;
+  }
+
   function getHash(
-    storage: BucketStorage,
+    limiter: RateLimiter,
     routeID: string,
   ) {
-    storage.mutex.readLock();
-    const hash = storage.routed.get(routeID);
-    storage.mutex.readUnlock();
+    limiter.mutex.readLock();
+    const hash = limiter.routed.get(routeID);
+    limiter.mutex.readUnlock();
     return hash;
+  }
+
+  export function produceRouteID(method: RequestMethod, path: PathLike) {
+    const majorPath = path.replace(
+      /\/([a-z-]+)\/(?:\d{16,19})/g,
+      (match, segment) => {
+        if (
+          segment === "channels" || segment === "guilds" ||
+          segment === "webhooks"
+        ) {
+          // Return the full match, which looks like `/{segment}/{id}`.
+          return match;
+        } else {
+          // Strip out all IDs that are not for major segments.
+          return `/${segment}/:id`;
+        }
+      },
+    )
+      // Strip out reaction as they fall under the same bucket.
+      .replace(/\/reactions\/[^/]+/g, "/reactions/:id");
+
+    /**
+     * @license MIT
+     * @author Discord.js Authors
+     * https://github.com/discordjs/discord.js-modules/blob/7f1c9be817bbc6a4a11a726c952580dd3cb7b149/packages/rest/src/lib/RequestManager.ts#L283
+     */
+
+    let exceptions = "";
+
+    // Hard-Code Old Message Deletion Exception (2 week+ old messages are a different bucket)
+    // https://github.com/discord/discord-api-docs/issues/1295
+    if (
+      method === RequestMethod.DELETE &&
+      majorPath === "/channels/:id/messages/:id"
+    ) {
+      const ID = /\d{16,19}$/.exec(path)![0];
+      const timestamp = SnowflakeUtil.getTimestamp(ID);
+      if (Date.now() - timestamp > 1000 * 60 * 60 * 24 * 14) {
+        exceptions += "/Delete 2 week+ old messages";
+      }
+    }
+
+    return `${method}:${majorPath}${exceptions}`;
   }
 
   function calculateLatency(response: Response) {
