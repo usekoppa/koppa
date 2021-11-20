@@ -15,13 +15,21 @@ import type { Nullable } from "../_internals/utils.ts";
  * https://discord.com/developers/docs/resources/guild#guild-member-object
  */
 export interface GuildMember {
+  /** The user this guild member represents. */
   user?: User;
+  /** This user's guild nickname. */
   nick?: Nullable<string>;
+  /** The member's guild avatar (hash). */
   avatar?: Nullable<string>;
+  /** Array of role IDs. */
   roles: Snowflake[];
+  /** When (ISO8601) the user joined the guild. */
   joined_at: ISO8601;
+  /** When (ISO8601) the user started boosting the guild. */
   premium_since?: Nullable<ISO8601>;
+  /** Whether the user is deafened in voice channels. */
   deaf: boolean;
+  /** Whether the user is muted in voice channels. */
   mute: boolean;
   /** Whether the user has not yet passed the guild's Membership Screening requirements. */
   pending?: boolean;

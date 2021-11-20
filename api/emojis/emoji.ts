@@ -1,4 +1,3 @@
-import { GatewayDispatchEvent } from "../gateway/dispatch_event.ts";
 import { Permission } from "../permissions/permission.ts";
 import { Image } from "../types/image/image.ts";
 import { Snowflake } from "../types/snowflake.ts";
@@ -48,6 +47,8 @@ export namespace Emoji {
       >
     >
     & { require_colons: true };
+
+  export type Reaction = Pick<Emoji, "id" | "name"> & { animated?: true };
 
   export namespace REST {
     export namespace GET {
@@ -227,19 +228,5 @@ export namespace Emoji {
     ): _GuildEmojisRoute<GuildID> {
       return `/guilds/${guildID}/emojis`;
     }
-  }
-
-  export namespace Gateway {
-    export namespace MessageReactionAdd {
-      export type Event = GatewayDispatchEvent.MessageReactionAdd;
-      export type Data = _Data;
-    }
-
-    export namespace MessageReactionRemove {
-      export type Event = GatewayDispatchEvent.MessageReactionRemove;
-      export type Data = _Data;
-    }
-
-    type _Data = Pick<Emoji, "id" | "name"> & { animated?: true };
   }
 }

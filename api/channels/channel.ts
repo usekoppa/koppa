@@ -17,7 +17,6 @@ export interface Channel<Type extends ChannelType = ChannelType>
   guild_id?: Snowflake;
   position?: number;
   permissions_overwrites?: PermissionOverwrite[];
-  name?: string;
   topic?: Nullable<string>;
   nsfw?: boolean;
   last_message_id?: Nullable<Snowflake>;
@@ -46,6 +45,7 @@ export namespace Channel {
   export interface Partial<Type extends ChannelType = ChannelType> {
     id: Snowflake;
     type: Type;
+    name?: string;
   }
 
   /** https://discord.com/developers/docs/resources/channel#channel-object-example-dm-channel */
