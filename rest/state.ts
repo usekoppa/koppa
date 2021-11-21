@@ -1,69 +1,64 @@
-import { Authorisation, AuthorisationType } from "./authorisation.ts";
+import { Authorisation } from "./payload/authorisation.ts";
+import { RESTPayload } from "./payload/request.ts";
 import { RateLimiter } from "./rate_limits/rate_limiter.ts";
-import { DiscordRequest } from "./request.ts";
 
 export interface State {
-  authorisation: Authorisation;
   limiter: RateLimiter;
+  opts: StateOptions;
 }
 
 export namespace State {
-  export function Create(authorisation: Authorisation): Readonly<State>;
-  export function Create(token: string): Readonly<State>;
   export function Create(
-    tokenOrAuth: string | Authorisation,
+    opts: CreateOptions & { authorisation: Authorisation },
+  ): Readonly<State>;
+  export function Create(
+    token: string,
+    opts?: CreateOptions & {
+      authorisation?: Partial<Pick<Authorisation, "scheme">>;
+    },
+  ): Readonly<State>;
+  export function Create(
+    tokenOrOpts: string | (CreateOptions & { authorisation: Authorisation }),
+    opts?: CreateOptions,
   ) {
-    const authorisation = typeof tokenOrAuth === "string"
-      ? { token: tokenOrAuth, type: "Bot" as AuthorisationType }
-      : tokenOrAuth;
+    const authorisation: Authorisation = typeof tokenOrOpts === "string"
+      ? { token: tokenOrOpts, scheme: opts?.authorisation?.scheme ?? "Bot" }
+      : tokenOrOpts.authorisation;
+
+    const stateOpts: StateOptions = {
+      authorisation,
+      // The maximum amount of times we should retry a request.
+      maxRetries: opts?.maxRetries ?? 10,
+    };
 
     const state: Readonly<State> = Object.freeze({
-      authorisation,
       limiter: RateLimiter.Create(),
+      opts: stateOpts,
     });
 
     return state;
   }
 
-  export async function execute(state: State, discordRequest: DiscordRequest) {
-    const headers = new Headers();
-    headers.set(
-      "Authorization",
-      `${state.authorisation.type} ${state.authorisation.token}`,
-    );
+  type CreateOptions = Partial<StateOptions> & {
+    authorisation?: Partial<Authorisation>;
+  };
 
-    headers.set(
-      "User-Agent",
-      "DiscordBot (https://github.com/usekoppa, Koppa v0.0.1)",
-    );
+  export async function dispatch(
+    state: State,
+    opts: DispatchOptions,
+  ) {
+    const payload: RESTPayload = {
+      ...opts,
+      authorisation: opts.authorisation ?? state.opts.authorisation,
+    };
 
-    if (discordRequest.auditLogReason) {
-      headers.set("X-AuditLog-Reason", discordRequest.auditLogReason);
-    }
-
-    let body = discordRequest.attachments
-      ? new FormData()
-      : JSON.stringify(discordRequest.body);
-
-    if (discordRequest.attachments) {
-      const form = body as FormData;
-      for (const { name, blob } of discordRequest.attachments) {
-        form.set(name, blob);
-      }
-      body = form;
-    }
-
-    const request = new Request(discordRequest.path, {
-      method: discordRequest.method,
-      headers,
-      body,
-    });
+    const request = RESTPayload.produceRequest(payload);
 
     let limiter = await RateLimiter.limit(state.limiter, request);
     const response = await fetch(request);
     limiter = await RateLimiter.update(
       limiter,
-      discordRequest.method,
+      payload.method,
       response,
     );
 
@@ -75,4 +70,13 @@ export namespace State {
       },
     };
   }
+
+  type DispatchOptions =
+    & Omit<RESTPayload, "authorisation">
+    & Partial<Pick<RESTPayload, "authorisation">>;
+}
+
+interface StateOptions {
+  authorisation: Authorisation;
+  maxRetries: number;
 }

@@ -1,5 +1,5 @@
 import { Snowflake } from "../types/snowflake.ts";
-import { Nullable } from "../_internals/utils.ts";
+import { Nullable } from "../../utils/type_util.ts";
 
 export interface Attachment {
   /** Attachment ID. */

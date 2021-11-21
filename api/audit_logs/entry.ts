@@ -1,5 +1,5 @@
 import type { Snowflake } from "../types/mod.ts";
-import type { Nullable } from "../_internals/utils.ts";
+import type { Nullable } from "../../utils/type_util.ts";
 import type { AuditLogChange } from "./change/change.ts";
 import type { AuditLogEvent } from "./event.ts";
 import type { AuditLogOptions } from "./options.ts";

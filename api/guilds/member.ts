@@ -3,7 +3,7 @@ import type { SerialisedPermissions } from "../permissions/serialised.ts";
 import type { ISO8601, Snowflake } from "../types/mod.ts";
 import type { User } from "../users/user.ts";
 import { encodeQueryString } from "../_internals/encode_query_string.ts";
-import type { Nullable } from "../_internals/utils.ts";
+import type { Nullable } from "../../utils/type_util.ts";
 
 /**
  * Guild Member Object

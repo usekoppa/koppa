@@ -1,5 +1,5 @@
 import type { ISO8601, Locale, Snowflake } from "../types/mod.ts";
-import type { $TODO, Nullable } from "../_internals/utils.ts";
+import type { $TODO, Nullable } from "../../utils/type_util.ts";
 import type { SerialisedPermissions } from "../permissions/serialised.ts";
 import type { GuildVerificationLevel } from "./verification_level.ts";
 import type { GuildDefaultMessageNotificationLevel } from "./default_message_notification_level.ts";

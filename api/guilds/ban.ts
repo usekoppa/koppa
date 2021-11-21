@@ -1,6 +1,6 @@
 import type { Snowflake } from "../types/snowflake.ts";
 import type { User } from "../users/user.ts";
-import type { Nullable } from "../_internals/utils.ts";
+import type { Nullable } from "../../utils/type_util.ts";
 
 /** https://discord.com/developers/docs/resources/guild#ban-object-ban-structure */
 export interface GuildBan {

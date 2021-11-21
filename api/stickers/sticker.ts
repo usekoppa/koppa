@@ -1,5 +1,5 @@
 import type { Snowflake } from "../types/snowflake.ts";
-import type { Nullable } from "../_internals/utils.ts";
+import type { Nullable } from "../../utils/type_util.ts";
 import type { User } from "../users/user.ts";
 import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
 import { Permission } from "../permissions/permission.ts";

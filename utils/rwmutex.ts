@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-empty
 
-import { immerable } from "./deps.ts";
+import { immerable } from "./../deps.ts";
 
 export class RWMutex {
   readonly [immerable] = true;

@@ -1,4 +1,4 @@
-import type { Nullable } from "../../_internals/utils.ts";
+import type { Nullable } from "../../../utils/type_util.ts";
 import type { GuildWelcomeScreenChannel } from "./channel.ts";
 
 export interface GuildWelcomeScreen {

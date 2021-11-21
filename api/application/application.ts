@@ -1,5 +1,5 @@
 import type { Snowflake } from "../types/snowflake.ts";
-import type { Nullable } from "../_internals/utils.ts";
+import type { Nullable } from "../../utils/type_util.ts";
 import type { Team } from "../teams/team.ts";
 import type { User } from "../users/user.ts";
 import type { ApplicationFlags } from "./flags.ts";

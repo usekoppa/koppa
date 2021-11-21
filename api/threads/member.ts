@@ -1,5 +1,5 @@
 import type { ISO8601, Snowflake } from "../types/mod.ts";
-import { $TODO } from "../_internals/utils.ts";
+import { $TODO } from "../../utils/type_util.ts";
 import { _ThreadMembersRoute } from "./_thread_members_route.ts";
 
 export interface ThreadMember {

@@ -2,7 +2,8 @@ import { ChannelMention } from "../channels/mention.ts";
 import { GuildMember } from "../guilds/member.ts";
 import { ISO8601, Snowflake } from "../types/mod.ts";
 import { User } from "../users/user.ts";
-import { $TODO, Nullable } from "../_internals/utils.ts";
+import { $TODO, Nullable } from "../../utils/type_util.ts";
+import { MessageReaction } from "./reaction.ts";
 
 export interface Message {
   id: Snowflake;
@@ -29,7 +30,7 @@ export interface Message {
   /** Any attached files. */
   embeds: $TODO[];
   /** Any reactions to the message. */
-  reactions?: Reaction
+  reactions?: MessageReaction
 }
 
 export namespace Message {

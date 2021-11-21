@@ -1,10 +1,12 @@
+import { Bucket } from "./bucket.ts";
+
+import { RequestMethod } from "../payload/method.ts";
+
+import { RWMutex } from "../../utils/rwmutex.ts";
 import { SnowflakeUtil } from "../../utils/snowflake_util.ts";
 import { PathLike } from "../../utils/type_util.ts";
-import { produce } from "../deps.ts";
-import { RequestMethod } from "../method.ts";
-// import { DiscordRequest } from "../request.ts";
-import { RWMutex } from "../rwmutex.ts";
-import { Bucket } from "./bucket.ts";
+
+import { produce } from "../../deps.ts";
 
 export interface RateLimiter {
   readonly mutex: RWMutex;
@@ -17,17 +19,30 @@ export interface RateLimiter {
 }
 
 export namespace RateLimiter {
-  export function Create(): RateLimiter {
+  export interface CreateOptions {
+    /**
+     * DO NOT use this option unless you have your global rate limit adjusted by Discord.
+     */
+    global?: {
+      /** The amount of requests you can have per period. */
+      limit: number;
+      /** The period be in seconds. */
+      period: number;
+    };
+  }
+
+  export function Create(opts?: CreateOptions): RateLimiter {
+    // 50 requests per second by default.
+    const limit = opts?.global?.limit ?? 50;
     return {
       mutex: new RWMutex(),
       // https://discord.com/developers/docs/topics/rate-limits#global-rate-limit
       global: Bucket.Create({
-        // 50 requests per second.
-        limit: 50,
-        // Starts with 50 requests that can be reserved.
-        remaining: 50,
-        // 1 second in ms.
-        period: 1000,
+        limit,
+        // Starts with `limit` requests that can be reserved.
+        remaining: limit,
+        // 1 second in ms by default.
+        period: (opts?.global?.period ?? 1) * 1000,
       }),
       routed: new Map(),
       buckets: new Map(),

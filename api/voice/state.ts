@@ -1,6 +1,6 @@
 import { GuildMember } from "../guilds/mod.ts";
 import { ISO8601, Snowflake } from "../types/mod.ts";
-import { Nullable } from "../_internals/utils.ts";
+import { Nullable } from "../../utils/type_util.ts";
 
 /**
  * Voice State Object

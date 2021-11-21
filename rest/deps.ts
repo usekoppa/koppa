@@ -1,4 +1,1 @@
-export { default as produce, immerable } from "https://cdn.skypack.dev/immer@9.0.6?dts";
-
-import { enableMapSet } from "https://cdn.skypack.dev/immer@9.0.6?dts";
-enableMapSet();
+export { contentType } from "https://deno.land/x/media_types@v2.11.0/mod.ts";

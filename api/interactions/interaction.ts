@@ -2,7 +2,7 @@ import { GuildMember } from "../guilds/member.ts";
 import { Message } from "../messages/message.ts";
 import { Snowflake } from "../types/snowflake.ts";
 import { User } from "../users/user.ts";
-import { $TODO } from "../_internals/utils.ts";
+import { $TODO } from "../../utils/type_util.ts";
 import { InteractionType } from "./type.ts";
 
 export interface Interaction {

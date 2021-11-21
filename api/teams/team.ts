@@ -1,5 +1,5 @@
 import { Snowflake } from "../types/snowflake.ts";
-import { Nullable } from "../_internals/utils.ts";
+import { Nullable } from "../../utils/type_util.ts";
 import { TeamMember } from "./members/member.ts";
 
 export interface Team {

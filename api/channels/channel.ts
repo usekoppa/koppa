@@ -1,5 +1,5 @@
 import { ISO8601, Snowflake } from "../types/mod.ts";
-import { Nullable } from "../_internals/utils.ts";
+import { Nullable } from "../../utils/type_util.ts";
 import { User } from "../users/mod.ts";
 import { ChannelType } from "./channel_type.ts";
 import { PermissionOverwrite } from "../permissions/overwrites/overwrite.ts";

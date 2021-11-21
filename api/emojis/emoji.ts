@@ -3,7 +3,7 @@ import { Image } from "../types/image/image.ts";
 import { Snowflake } from "../types/snowflake.ts";
 import { User } from "../users/user.ts";
 import { AuditLogReasonHeaders } from "../_internals/audit_log_reason_headers.ts";
-import { NonNullableObject, Nullable } from "../_internals/utils.ts";
+import { NonNullableObject, Nullable } from "../../utils/type_util.ts";
 
 /** https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
 export interface Emoji {
