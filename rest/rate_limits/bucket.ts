@@ -52,8 +52,9 @@ export namespace Bucket {
 
       const now = Date.now();
       if (resetAt > now) {
-        const timeUntilReset = resetAt - Date.now();
+        const timeUntilReset = resetAt - now;
         await wait(timeUntilReset);
+        lastResetAt = Date.now();
       }
 
       remaining = bucket.limit;
