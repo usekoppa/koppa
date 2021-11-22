@@ -2,14 +2,12 @@ import { Bucket } from "./bucket.ts";
 
 import { RequestMethod } from "../payload/method.ts";
 
-import { RWMutex } from "../../utils/rwmutex.ts";
 import { SnowflakeUtil } from "../../utils/snowflake_util.ts";
 import { PathLike } from "../../utils/type_util.ts";
 
 import { produce } from "../../deps.ts";
 
 export interface RateLimiter {
-  readonly mutex: RWMutex;
   readonly global: Bucket;
   // The route ID -> the hash.
   readonly routed: Map<string, string>;
@@ -35,7 +33,6 @@ export namespace RateLimiter {
     // 50 requests per second by default.
     const limit = opts?.global?.limit ?? 50;
     return {
-      mutex: new RWMutex(),
       // https://discord.com/developers/docs/topics/rate-limits#global-rate-limit
       global: Bucket.Create({
         limit,
@@ -50,8 +47,10 @@ export namespace RateLimiter {
     };
   }
 
-  export async function limit(limiter: RateLimiter, request: Request) {
-    limiter.mutex.lock();
+  export async function limit(
+    limiter: RateLimiter,
+    request: Request,
+  ) {
     const global = await Bucket.reserve(limiter.global, limiter.latency);
     const routeID = produceRouteID(
       request.method as RequestMethod,
@@ -68,7 +67,6 @@ export namespace RateLimiter {
     return produce(limiter, (draft) => {
       draft.global = global;
       if (hash) draft.buckets.set(hash, bucket);
-      draft.mutex.unlock();
     });
   }
 
@@ -106,6 +104,7 @@ export namespace RateLimiter {
           ? parseFloat(response.headers.get("Retry-After")!) * 1000
           : null;
 
+        // TODO(@zorbyte): Test what cloudflare rate limits actually look like.
         if (!isCloudFlare) {
           const body = await response.json();
           retryAfter = body.retry_after * 1000;
@@ -140,8 +139,7 @@ export namespace RateLimiter {
       }
     }
 
-    limiter.mutex.lock();
-    return produce(limiter, (draft) => {
+    return await produce(limiter, async (draft) => {
       draft.latency = latency;
       if (isGlobalRateLimit) {
         draft.global = {
@@ -152,8 +150,6 @@ export namespace RateLimiter {
         draft.routed.set(routeID, hash);
         draft.buckets.set(hash, bucket);
       }
-
-      draft.mutex.unlock();
     });
   }
 
@@ -161,9 +157,8 @@ export namespace RateLimiter {
     limiter: RateLimiter,
     hash: string,
   ) {
-    limiter.mutex.readLock();
+    if (!limiter.routed.has(hash)) throw new Error("Bucket hash not found");
     const bucket = limiter.buckets.get(hash)!;
-    limiter.mutex.readUnlock();
     return bucket;
   }
 
@@ -171,9 +166,7 @@ export namespace RateLimiter {
     limiter: RateLimiter,
     routeID: string,
   ) {
-    limiter.mutex.readLock();
     const hash = limiter.routed.get(routeID);
-    limiter.mutex.readUnlock();
     return hash;
   }
 

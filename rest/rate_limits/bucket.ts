@@ -32,15 +32,18 @@ export namespace Bucket {
   }
 
   export function Create(opts: CreateOptions): Bucket {
-    return Object.freeze({
+    return {
       ...opts,
       lastResetAt: Date.now(),
       retryAfter: opts.retryAfter ?? null,
       lastReservationAt: Date.now(),
-    });
+    };
   }
 
-  export async function reserve(bucket: Bucket, latency = 0): Promise<Bucket> {
+  export async function reserve(
+    bucket: Bucket,
+    latency = 0,
+  ): Promise<Bucket> {
     let remaining = bucket.remaining;
     let lastResetAt = bucket.lastResetAt;
 

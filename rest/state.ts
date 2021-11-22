@@ -1,22 +1,24 @@
+import { RWMutex } from "../utils/mutex/mod.ts";
 import { Authorisation } from "./payload/authorisation.ts";
 import { RESTPayload } from "./payload/request.ts";
 import { RateLimiter } from "./rate_limits/rate_limiter.ts";
 
 export interface State {
+  limiterMutex: RWMutex;
   limiter: RateLimiter;
-  opts: StateOptions;
+  opts: Readonly<StateOptions>;
 }
 
 export namespace State {
   export function Create(
     opts: CreateOptions & { authorisation: Authorisation },
-  ): Readonly<State>;
+  ): State;
   export function Create(
     token: string,
     opts?: CreateOptions & {
       authorisation?: Partial<Pick<Authorisation, "scheme">>;
     },
-  ): Readonly<State>;
+  ): State;
   export function Create(
     tokenOrOpts: string | (CreateOptions & { authorisation: Authorisation }),
     opts?: CreateOptions,
@@ -25,18 +27,16 @@ export namespace State {
       ? { token: tokenOrOpts, scheme: opts?.authorisation?.scheme ?? "Bot" }
       : tokenOrOpts.authorisation;
 
-    const stateOpts: StateOptions = {
+    const stateOpts: StateOptions = Object.freeze({
       authorisation,
       // The maximum amount of times we should retry a request.
       maxRetries: opts?.maxRetries ?? 10,
-    };
-
-    const state: Readonly<State> = Object.freeze({
-      limiter: RateLimiter.Create(),
-      opts: stateOpts,
     });
 
-    return state;
+    return {
+      limiter: RateLimiter.Create(),
+      opts: stateOpts,
+    };
   }
 
   type CreateOptions = Partial<StateOptions> & {
@@ -53,8 +53,9 @@ export namespace State {
     };
 
     const request = RESTPayload.produceRequest(payload);
-
+    await state.limiterMutex.lock();
     let limiter = await RateLimiter.limit(state.limiter, request);
+
     const response = await fetch(request);
     limiter = await RateLimiter.update(
       limiter,
@@ -62,11 +63,12 @@ export namespace State {
       response,
     );
 
+    state.limiterMutex.unlock();
     return {
       body: await response.json(),
       state: {
         ...state,
-        limiter,
+        limiter: state.limiter,
       },
     };
   }
